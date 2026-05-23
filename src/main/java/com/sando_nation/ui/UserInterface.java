@@ -1,9 +1,11 @@
 package com.sando_nation.ui;
 
+import com.sando_nation.model.Order;
+
 import java.util.Scanner;
 
 public class UserInterface {
-    public Scanner input = new Scanner(System.in);
+    public Scanner scanner = new Scanner(System.in);
 
     public void runHomeScreen() {
         boolean isRunning = true;
@@ -15,7 +17,7 @@ public class UserInterface {
                 Enter command: \s""");
 
 
-            String choice = input.nextLine().toLowerCase().trim();
+            String choice = scanner.nextLine().toLowerCase().trim();
             switch (choice) {
                 case "1" -> runOrderScreen();
                 case "0" -> isRunning = false;
@@ -39,14 +41,39 @@ public class UserInterface {
                   R) Return to home screen
                   Enter command: \s""");
 
-            String choice = input.nextLine().toLowerCase().trim();
+            String choice = scanner.nextLine().toLowerCase().trim();
             switch (choice) {
-                case "1" -> runGrandchildScreen();
+                case "1" -> runSandwichesMenuScreen();
                 case "a" -> System.out.println("  [Action] Logic executed in Child A.");
                 case "r" -> inChildA = false;
                 default -> System.out.println("  Invalid input.");
             }
         }
+    }
+
+    private void runSandwichesMenuScreen() {
+
+        Order order = new Order();
+        do {
+            System.out.println("Select bread: ");
+            System.out.println("A. White\n" +
+                    "B. Wheat\n" +
+                    "C. Rye\n" +
+                    "D. Wrap");
+
+            String choice = scanner.nextLine().toLowerCase().trim();
+
+            switch (choice) {
+                case "A" -> addBread("white");
+                case "a" -> System.out.println("  [Action] Logic executed in Child A.");
+                case "r" -> {
+                    return;
+                }
+                default -> System.out.println("  Invalid input.");
+
+            }
+
+        } while (true);
     }
 
     //• Order Screen - All entries should show the newest entries first
@@ -82,7 +109,7 @@ public class UserInterface {
                     B) Back to Child Screen A
                     Enter command: \s""");
 
-            String choice = input.nextLine().toLowerCase().trim();
+            String choice = scan.nextLine().toLowerCase().trim();
             switch (choice) {
                 case "a" -> System.out.println("    [Action] Logic executed in Grandchild.");
                 case "b" -> inGrandchild = false;

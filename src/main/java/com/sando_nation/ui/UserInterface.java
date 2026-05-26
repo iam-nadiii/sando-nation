@@ -1,9 +1,13 @@
 package com.sando_nation.ui;
 
+import com.sando_nation.model.MenuItem;
 import com.sando_nation.model.Order;
+import com.sando_nation.model.PricedItem;
 import com.sando_nation.model.Sandwich;
 
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class UserInterface {
     public Scanner scanner = new Scanner(System.in);
@@ -52,140 +56,16 @@ public class UserInterface {
         }
     }
 
-    private void runSandwichesMenuScreen() {
-        boolean isRunning = true;
-
-        Order order = new Order();
-        Sandwich sandwich = new Sandwich();
-        order.addMenuItem(sandwich);
-        runBreadChoiceScreen(sandwich, isRunning);
-
-        runProteinChoiceScreen(sandwich);
-
-        runCheeseChoiceScreen(sandwich);
 
 
+
+
+    private void displayOptions(String title, List<? extends PricedItem> options) {
+        System.out.println("\n" + title);
+        System.out.println("─────────────────────");
+        IntStream.range(0, options.size())
+                .forEach(i -> System.out.println((i + 1) + ". " + options.get(i).getName()));
     }
-
-    private void runCheeseChoiceScreen(Sandwich sandwich) {
-        outer:
-        do {
-            System.out.println("Select cheese: ");
-            System.out.println("A. American\n" +
-                    "B. Provolone\n" +
-                    "C. Cheddar\n" +
-                    "D. Swiss\n");
-
-            String choice = scanner.nextLine().toUpperCase().trim();
-
-            switch (choice) {
-                case "A" -> {
-                    sandwich.setCheese("American");
-                    break outer;
-                }
-                case "B" -> sandwich.setCheese("Provolone");
-                case "C" -> sandwich.setCheese("Cheddar");
-                case "D" -> sandwich.setCheese("Swiss");
-                case "r" -> {
-                    return;
-                }
-                default -> System.out.println("  Invalid input.");
-
-            }
-
-        } while (true);
-    }
-
-    private void runProteinChoiceScreen(Sandwich sandwich) {
-        outer:
-        do {
-            System.out.println("Select protein: ");
-            System.out.println("A. Steak\n" +
-                    "B. Ham\n" +
-                    "C. Salami\n" +
-                    "D. Roast beef\n" +
-                    "E. Chicken\n" +
-                    "F. Bacon");
-
-            String choice = scanner.nextLine().toUpperCase().trim();
-
-            switch (choice) {
-                case "A" -> {
-                    sandwich.setProtein("Steak");
-                    break outer;
-                }
-                case "B" -> {
-                    sandwich.setProtein("Ham");
-                    break outer;
-                }
-                case "C" -> sandwich.setProtein("Salami");
-                case "D" -> sandwich.setProtein("Roast beef");
-                case "E" -> sandwich.setProtein("Chicken");
-                case "F" -> sandwich.setProtein("Bacon");
-                case "r" -> {
-                    return;
-                }
-                default -> System.out.println("  Invalid input.");
-
-            }
-
-        } while (true);
-    }
-
-    private void runBreadChoiceScreen(Sandwich sandwich, boolean isRunning) {
-        outer:
-        do {
-            System.out.println("Select bread: ");
-            System.out.println("A. White\n" +
-                    "B. Wheat\n" +
-                    "C. Rye\n" +
-                    "D. Wrap");
-
-            String choice = scanner.nextLine().toUpperCase().trim();
-
-            switch (choice) {
-                case "A" -> {
-                    sandwich.setBreadType("white");
-                    break outer;
-                }
-                case "B" -> sandwich.setBreadType("Wheat");
-                case "C" -> sandwich.setBreadType("Rye");
-                case "D" -> sandwich.setBreadType("Wrap");
-                case "r" -> {
-                    isRunning = false;
-                }
-                default -> System.out.println("  Invalid input.");
-
-            }
-
-        } while (isRunning);
-    }
-
-    private void printPrices(double priceOfSmall, double priceOfMedium, double priceOfLarge){
-        System.out.println();
-    }
-
-    //• Order Screen - All entries should show the newest entries first
-//o 1) Add Sandwich
-//o 2) Add Drink
-//o 3) Add Chips
-//o 4) Checkout
-//o 0) Cancel Order - delete the order and go back to the home page
-//• Add Sandwich - the add sandwich screen will walk the user through several
-//options to create the sandwich
-//o Select your bread:
-//o Sandwich size:
-//o Toppings: - the user should be able to add extras of each topping
-//▪ Meat:
-//        ▪ Cheese:
-//        ▪ Other toppings:
-//        ▪ Select sauces:
-//o Would you like the sandwich toasted?
-//        • Add Drink - select drink size and flavor
-//• Add Chips - select chip type
-//• Checkout - display the order details and the price
-//o Confirm - create the receipt file and go back to the home screen
-//o Cancel - delete order and go back to the home screen
 
 }
 

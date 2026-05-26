@@ -2,6 +2,24 @@ package com.sando_nation.model;
 
 public class Meat extends Topping{
         double priceFour, priceEight, priceTwelve, extraPriceFour, extraPriceEight, extraPriceTwelve;
+        public String size;
+        public boolean wantsExtra;
+
+        public String getSize() {
+            return size;
+        }
+
+        public void setSize(String size) {
+            this.size = size;
+        }
+
+        public boolean isWantsExtra() {
+            return wantsExtra;
+        }
+
+        public void setWantsExtra(boolean wantsExtra) {
+            this.wantsExtra = wantsExtra;
+        }
 
         public Meat (String name, double priceFour, double priceEight, double priceTwelve,
                        double extraPriceFour, double extraPriceEight, double extraPriceTwelve) {
@@ -60,6 +78,35 @@ public class Meat extends Topping{
 
         public void setExtraPriceTwelve(double extraPriceTwelve) {
             this.extraPriceTwelve = extraPriceTwelve;
+        }
+
+        public double calculatePrice(String size, boolean wantsExtra){
+            if(size.equalsIgnoreCase("4 inch")){
+                if (wantsExtra){
+                    return priceFour;
+                }
+                return extraPriceFour;
+            }
+
+            if(size.equalsIgnoreCase("8 inch")){
+                if (wantsExtra){
+                    return priceEight;
+                }
+                return extraPriceEight;
+            }
+
+            if (size.equalsIgnoreCase("12 inch")){
+                if (wantsExtra){
+                    return priceTwelve;
+                }
+                return extraPriceTwelve;
+            }
+            return 0;
+        }
+
+         @Override
+        public double getPrice(){
+            return calculatePrice(this.size, this.wantsExtra);
         }
 
         @Override

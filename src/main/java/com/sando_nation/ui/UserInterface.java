@@ -1,9 +1,6 @@
 package com.sando_nation.ui;
 
-import com.sando_nation.model.MenuItem;
-import com.sando_nation.model.Order;
-import com.sando_nation.model.PricedItem;
-import com.sando_nation.model.Sandwich;
+import com.sando_nation.model.*;
 
 import java.util.List;
 import java.util.Scanner;
@@ -33,6 +30,8 @@ public class UserInterface {
 
 
     public void runOrderScreen() {
+        Order order = new Order();
+        Menu menu = new Menu();
         boolean inChildA = true;
         while (inChildA) {
             System.out.print("""
@@ -48,7 +47,16 @@ public class UserInterface {
 
             String choice = scanner.nextLine().toUpperCase().trim();
             switch (choice) {
-                case "1" -> runSandwichesMenuScreen();
+                case "1" -> {
+                    Sandwich sandwich = new Sandwich();
+
+                    displayOptions("Sandwich Sizes", menu.getSizes());
+                    int userChoice = Integer.parseInt(makeASelection()) -1;
+                    SandwichSize size = menu.getSizes().get(userChoice);
+
+                    sandwich.setSandwichSize(size);
+                    System.out.println(sandwich);
+                }
                 case "A" -> System.out.println("  [Action] Logic executed in Child A.");
                 case "R" -> inChildA = false;
                 default -> System.out.println("  Invalid input.");
@@ -64,7 +72,14 @@ public class UserInterface {
         System.out.println("\n" + title);
         System.out.println("─────────────────────");
         IntStream.range(0, options.size())
-                .forEach(i -> System.out.println((i + 1) + ". " + options.get(i).getName()));
+                .forEach(i -> System.out.println((i + 1) + ". " + options.get(i).getDescription()));
+    }
+
+    private String makeASelection(){
+        System.out.println("Make your selection: ");
+        String choice = scanner.nextLine();
+
+        return choice;
     }
 
 }

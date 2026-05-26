@@ -29,4 +29,9 @@ public class SandwichSize extends MenuItem{
     public double getPrice(){
         return breadPrice;
     }
+
+    @Override
+    public String getDescription(){
+        return getSize();
+    }
 }

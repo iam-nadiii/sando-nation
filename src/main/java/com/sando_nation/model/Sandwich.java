@@ -62,11 +62,11 @@ public class Sandwich implements PricedItem {
     @Override
     public String toString() {
         return "Sandwich{" +
-                "sandwichSize=" + sandwichSize +
-                ", bread=" + bread +
-                ", meat=" + meat +
-                ", cheese=" + cheese +
-                ", regularTopping=" + regularTopping +
+                "sandwichSize=" + sandwichSize.getDescription() +
+                ", bread=" + bread.getDescription() +
+                ", meat=" + meat.getDescription() +
+                ", cheese=" + cheese.getDescription() +
+                ", regularTopping=" + regularTopping.toString() +
                 '}';
     }
 
@@ -79,5 +79,6 @@ public class Sandwich implements PricedItem {
     public String getDescription(){
         return toString();
     }
+
 }
 

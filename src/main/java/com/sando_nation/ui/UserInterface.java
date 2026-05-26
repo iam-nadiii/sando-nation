@@ -1,6 +1,7 @@
 package com.sando_nation.ui;
 
 import com.sando_nation.model.Order;
+import com.sando_nation.model.Sandwich;
 
 import java.util.Scanner;
 
@@ -41,31 +42,50 @@ public class UserInterface {
                   R) Return to home screen
                   Enter command: \s""");
 
-            String choice = scanner.nextLine().toLowerCase().trim();
+            String choice = scanner.nextLine().toUpperCase().trim();
             switch (choice) {
                 case "1" -> runSandwichesMenuScreen();
-                case "a" -> System.out.println("  [Action] Logic executed in Child A.");
-                case "r" -> inChildA = false;
+                case "A" -> System.out.println("  [Action] Logic executed in Child A.");
+                case "R" -> inChildA = false;
                 default -> System.out.println("  Invalid input.");
             }
         }
     }
 
     private void runSandwichesMenuScreen() {
+        boolean isRunning = true;
 
         Order order = new Order();
-        do {
-            System.out.println("Select bread: ");
-            System.out.println("A. White\n" +
-                    "B. Wheat\n" +
-                    "C. Rye\n" +
-                    "D. Wrap");
+        Sandwich sandwich = new Sandwich();
+        order.addMenuItem(sandwich);
+        runBreadChoiceScreen(sandwich, isRunning);
 
-            String choice = scanner.nextLine().toLowerCase().trim();
+        runProteinChoiceScreen(sandwich);
+
+        runCheeseChoiceScreen(sandwich);
+
+
+    }
+
+    private void runCheeseChoiceScreen(Sandwich sandwich) {
+        outer:
+        do {
+            System.out.println("Select cheese: ");
+            System.out.println("A. American\n" +
+                    "B. Provolone\n" +
+                    "C. Cheddar\n" +
+                    "D. Swiss\n");
+
+            String choice = scanner.nextLine().toUpperCase().trim();
 
             switch (choice) {
-                case "A" -> addBread("white");
-                case "a" -> System.out.println("  [Action] Logic executed in Child A.");
+                case "A" -> {
+                    sandwich.setCheese("American");
+                    break outer;
+                }
+                case "B" -> sandwich.setCheese("Provolone");
+                case "C" -> sandwich.setCheese("Cheddar");
+                case "D" -> sandwich.setCheese("Swiss");
                 case "r" -> {
                     return;
                 }
@@ -74,6 +94,75 @@ public class UserInterface {
             }
 
         } while (true);
+    }
+
+    private void runProteinChoiceScreen(Sandwich sandwich) {
+        outer:
+        do {
+            System.out.println("Select protein: ");
+            System.out.println("A. Steak\n" +
+                    "B. Ham\n" +
+                    "C. Salami\n" +
+                    "D. Roast beef\n" +
+                    "E. Chicken\n" +
+                    "F. Bacon");
+
+            String choice = scanner.nextLine().toUpperCase().trim();
+
+            switch (choice) {
+                case "A" -> {
+                    sandwich.setProtein("Steak");
+                    break outer;
+                }
+                case "B" -> {
+                    sandwich.setProtein("Ham");
+                    break outer;
+                }
+                case "C" -> sandwich.setProtein("Salami");
+                case "D" -> sandwich.setProtein("Roast beef");
+                case "E" -> sandwich.setProtein("Chicken");
+                case "F" -> sandwich.setProtein("Bacon");
+                case "r" -> {
+                    return;
+                }
+                default -> System.out.println("  Invalid input.");
+
+            }
+
+        } while (true);
+    }
+
+    private void runBreadChoiceScreen(Sandwich sandwich, boolean isRunning) {
+        outer:
+        do {
+            System.out.println("Select bread: ");
+            System.out.println("A. White\n" +
+                    "B. Wheat\n" +
+                    "C. Rye\n" +
+                    "D. Wrap");
+
+            String choice = scanner.nextLine().toUpperCase().trim();
+
+            switch (choice) {
+                case "A" -> {
+                    sandwich.setBreadType("white");
+                    break outer;
+                }
+                case "B" -> sandwich.setBreadType("Wheat");
+                case "C" -> sandwich.setBreadType("Rye");
+                case "D" -> sandwich.setBreadType("Wrap");
+                case "r" -> {
+                    isRunning = false;
+                }
+                default -> System.out.println("  Invalid input.");
+
+            }
+
+        } while (isRunning);
+    }
+
+    private void printPrices(double priceOfSmall, double priceOfMedium, double priceOfLarge){
+        System.out.println();
     }
 
     //• Order Screen - All entries should show the newest entries first
@@ -98,25 +187,6 @@ public class UserInterface {
 //o Confirm - create the receipt file and go back to the home screen
 //o Cancel - delete order and go back to the home screen
 
-    // LEVEL 3: Grandchild (Only accessible via Child A)
-    public void runGrandchildScreen() {
-        boolean inGrandchild = true;
-        while (inGrandchild) {
-            System.out.println("\n    [LEVEL 3: GRANDCHILD SCREEN]");
-            System.out.print("""
-                \n    Options:
-                    A) Perform Grandchild Action
-                    B) Back to Child Screen A
-                    Enter command: \s""");
-
-            String choice = scan.nextLine().toLowerCase().trim();
-            switch (choice) {
-                case "a" -> System.out.println("    [Action] Logic executed in Grandchild.");
-                case "b" -> inGrandchild = false;
-                default -> System.out.println("    Invalid input.");
-            }
-        }
-    }
 }
 
 

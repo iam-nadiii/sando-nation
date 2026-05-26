@@ -4,22 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-    private List<MenuItem> items;
+    private List<PricedItem> items;
     private double total;
 
-    Order(){
+    public Order(){
 
         items = new ArrayList<>();
         total = 0;
     }
 
-    public void addMenuItem(MenuItem item){
+    public void addMenuItem(PricedItem item){
         items.add(item);
         total += item.getPrice();
     }
 
-    public void removeMenuItem(MenuItem item){
+    public void removeMenuItem(PricedItem item){
         items.remove(item);
         total -= item.getPrice();
     }
+
 }

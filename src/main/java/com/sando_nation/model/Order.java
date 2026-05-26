@@ -4,22 +4,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-    private List<MenuItem> items;
-    private double total;
+    private int             orderNumber;
+    private List<PricedItem>  pricedItems;
 
-    Order(){
-
-        items = new ArrayList<>();
-        total = 0;
+    public Order(int orderNumber) {
+        this.orderNumber = orderNumber;
+        this.pricedItems  = new ArrayList<>();
     }
 
-    public void addMenuItem(MenuItem item){
-        items.add(item);
-        total += item.getPrice();
+    public Order(){}
+
+    public void addPricedItem(PricedItem pricedItem) {
+        pricedItems.add(pricedItem);
     }
 
-    public void removeMenuItem(MenuItem item){
-        items.remove(item);
-        total -= item.getPrice();
+    public List<PricedItem> getPricedItems() { return pricedItems; }
+    public int getOrderNumber()           { return orderNumber; }
+
+    public double getTotal() {
+        double total = 0.00;
+        for (PricedItem i : pricedItems) {
+            total += i.getPrice();
+        }
+        return total;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Order #").append(orderNumber).append("\n");
+        sb.append("─────────────────────\n");
+        for (PricedItem p : pricedItems) {
+            sb.append(p.toString()).append("\n");
+        }
+        sb.append("─────────────────────\n");
+        sb.append("Order Total: $")
+                .append(String.format("%.2f", getTotal()));
+        return sb.toString();
     }
 }

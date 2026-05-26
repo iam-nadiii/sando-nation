@@ -2,80 +2,83 @@ package com.sando_nation.model;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-public class Sandwich implements MenuItem{
+public class Sandwich implements PricedItem {
+    SandwichSize sandwichSize;
+    Bread bread;
+    Meat meat;
+    Cheese cheese;
+    List<Topping> regularTopping;
 
-    private String size;
-    private String breadType;
-    private Topping cheese;
-    private Topping sauce;
-    private Topping extraMeat;
-    private ArrayList<Topping> regularTopping;
+    public Sandwich(SandwichSize sandwichSize, Bread bread, Meat meat,
+                    Cheese cheese, List<Topping> regularToppings){
 
-    Sandwich(){
-        regularTopping = new ArrayList<>();
     }
 
-    public Topping getCheese() {
+    public Sandwich(){}
+
+    public SandwichSize getSandwichSize() {
+        return sandwichSize;
+    }
+
+    public void setSandwichSize(SandwichSize sandwichSize) {
+        this.sandwichSize = sandwichSize;
+    }
+
+    public Bread getBread() {
+        return bread;
+    }
+
+    public void setBread(Bread bread) {
+        this.bread = bread;
+    }
+
+    public Meat getMeat() {
+        return meat;
+    }
+
+    public void setMeat(Meat meat) {
+        this.meat = meat;
+    }
+
+    public Cheese getCheese() {
         return cheese;
     }
 
-    public void setCheese(Topping cheese) {
+    public void setCheese(Cheese cheese) {
         this.cheese = cheese;
     }
 
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public String getBreadType() {
-        return breadType;
-    }
-
-    public void setBreadType(String breadType) {
-        this.breadType = breadType;
-    }
-
-    public Topping getSauce() {
-        return sauce;
-    }
-
-    public void setSauce(Topping sauce) {
-        this.sauce = sauce;
-    }
-
-    public Topping getExtraMeat() {
-        return extraMeat;
-    }
-
-    public void setExtraMeat(Topping extraMeat) {
-        this.extraMeat = extraMeat;
-    }
-
-    public ArrayList<Topping> getRegularTopping() {
+    public List<Topping> getRegularTopping() {
         return regularTopping;
     }
 
-    public void addARegularToppingItem(Topping topping) {
-        regularTopping.add(topping);
+    public void setRegularTopping(List<Topping> regularTopping) {
+        this.regularTopping = regularTopping;
     }
 
-    public void removeRegualrToppingItem(Topping topping){
-        regularTopping.remove(topping);
+    @Override
+    public String toString() {
+        return "Sandwich{" +
+                "sandwichSize=" + sandwichSize.getDescription() +
+                ", bread=" + bread.getDescription() +
+                ", meat=" + meat.getDescription() +
+                ", cheese=" + cheese.getDescription() +
+                ", regularTopping=" + regularTopping.toString() +
+                '}';
     }
 
-
-    public double getPrice(){
-
-        return 0;
+    @Override
+    public double getPrice() {
+        return bread.getPrice() + meat.getPrice() + cheese.getPrice() + sandwichSize.getPrice();
     }
 
-    public double calculateTotalSandwichPrice(){
-        return 0;
+    @Override
+    public String getDescription(){
+        return toString();
     }
+
 }
 

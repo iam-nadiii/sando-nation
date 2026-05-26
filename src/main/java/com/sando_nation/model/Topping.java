@@ -1,8 +1,10 @@
 package com.sando_nation.model;
 
-public class Topping {
+public abstract class Topping extends MenuItem {
+    public Topping(String name){
+        super(name);
+    }
 
 }
 
 
-//MenuInitializerClass?

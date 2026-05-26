@@ -1,8 +1,10 @@
 package com.sando_nation.ui;
 
-import com.sando_nation.model.Order;
+import com.sando_nation.model.*;
 
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class UserInterface {
     public Scanner scanner = new Scanner(System.in);
@@ -28,6 +30,8 @@ public class UserInterface {
 
 
     public void runOrderScreen() {
+        Order order = new Order();
+        Menu menu = new Menu();
         boolean inChildA = true;
         while (inChildA) {
             System.out.print("""
@@ -41,82 +45,53 @@ public class UserInterface {
                   R) Return to home screen
                   Enter command: \s""");
 
-            String choice = scanner.nextLine().toLowerCase().trim();
+            String choice = scanner.nextLine().toUpperCase().trim();
             switch (choice) {
-                case "1" -> runSandwichesMenuScreen();
-                case "a" -> System.out.println("  [Action] Logic executed in Child A.");
-                case "r" -> inChildA = false;
-                default -> System.out.println("  Invalid input.");
-            }
-        }
-    }
+                case "1" -> {
+                    Sandwich sandwich = new Sandwich();
 
-    private void runSandwichesMenuScreen() {
+                    displayOptions("Sandwich Sizes", menu.getSizes());
+                    int userChoice = Integer.parseInt(chooseAMenuItem()) -1;
+                    SandwichSize size = menu.getSizes().get(userChoice);
 
-        Order order = new Order();
-        do {
-            System.out.println("Select bread: ");
-            System.out.println("A. White\n" +
-                    "B. Wheat\n" +
-                    "C. Rye\n" +
-                    "D. Wrap");
+                    sandwich.setSandwichSize(size);
+                    System.out.println(sandwich);
 
-            String choice = scanner.nextLine().toLowerCase().trim();
+                    displayOptions("Bread Type", menu.getBreads());
+                    userChoice = Integer.parseInt(chooseAMenuItem()) -1;
+                    Bread bread = menu.getBreads().get(userChoice);
 
-            switch (choice) {
-                case "A" -> addBread("white");
-                case "a" -> System.out.println("  [Action] Logic executed in Child A.");
-                case "r" -> {
-                    return;
+                    sandwich.setBread(bread);
+                    System.out.println(sandwich);
+
+
+
                 }
+                case "A" -> System.out.println("  [Action] Logic executed in Child A.");
+                case "R" -> inChildA = false;
                 default -> System.out.println("  Invalid input.");
-
-            }
-
-        } while (true);
-    }
-
-    //• Order Screen - All entries should show the newest entries first
-//o 1) Add Sandwich
-//o 2) Add Drink
-//o 3) Add Chips
-//o 4) Checkout
-//o 0) Cancel Order - delete the order and go back to the home page
-//• Add Sandwich - the add sandwich screen will walk the user through several
-//options to create the sandwich
-//o Select your bread:
-//o Sandwich size:
-//o Toppings: - the user should be able to add extras of each topping
-//▪ Meat:
-//        ▪ Cheese:
-//        ▪ Other toppings:
-//        ▪ Select sauces:
-//o Would you like the sandwich toasted?
-//        • Add Drink - select drink size and flavor
-//• Add Chips - select chip type
-//• Checkout - display the order details and the price
-//o Confirm - create the receipt file and go back to the home screen
-//o Cancel - delete order and go back to the home screen
-
-    // LEVEL 3: Grandchild (Only accessible via Child A)
-    public void runGrandchildScreen() {
-        boolean inGrandchild = true;
-        while (inGrandchild) {
-            System.out.println("\n    [LEVEL 3: GRANDCHILD SCREEN]");
-            System.out.print("""
-                \n    Options:
-                    A) Perform Grandchild Action
-                    B) Back to Child Screen A
-                    Enter command: \s""");
-
-            String choice = scan.nextLine().toLowerCase().trim();
-            switch (choice) {
-                case "a" -> System.out.println("    [Action] Logic executed in Grandchild.");
-                case "b" -> inGrandchild = false;
-                default -> System.out.println("    Invalid input.");
             }
         }
     }
+
+
+
+
+
+    private void displayOptions(String title, List<? extends PricedItem> options) {
+        System.out.println("\n" + title);
+        System.out.println("─────────────────────");
+        IntStream.range(0, options.size())
+                .forEach(i -> System.out.println((i + 1) + ". " + options.get(i).getDescription()));
+    }
+
+    private String chooseAMenuItem(){
+        System.out.println("Make your selection: ");
+        String choice = scanner.nextLine();
+
+        return choice;
+    }
+
 }
 
 

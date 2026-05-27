@@ -5,6 +5,7 @@ import com.sando_nation.data.ReceiptFileHandler;
 import com.sando_nation.model.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.IntStream;
@@ -46,7 +47,8 @@ public class UserInterface {
                   1) Add Sandwich
                   2) Add Drinks
                   3) Add Chips
-                  4) Checkout
+                  4) Add Signature Sandwich
+                  5) Checkout
                   0) Cancel Order
                 Enter command: \s""");
 
@@ -71,9 +73,16 @@ public class UserInterface {
                     System.out.println(chips);
                 }
                 case "4" -> {
+                    SignatureSandwich signature = selectSignatureSandwich();
+                    order.addItem(signature);
+                    System.out.println("\n  Signature sandwich added!");
+                    System.out.println(signature);
+                }
+                case "5" -> {
                     checkout(order);
                     inOrder = false;
                 }
+
                 case "0" -> {
                     System.out.println("  Order cancelled.");
                     inOrder = false;
@@ -82,6 +91,40 @@ public class UserInterface {
             }
         }
     }
+
+    private SignatureSandwich selectSignatureSandwich() {
+        displayOptions("Select a signature sandwich:", menu.getSignatureSandwiches());
+        SignatureSandwich selected = menu.getSignatureSandwiches()
+                .get(chooseAMenuItem(menu.getSignatureSandwiches().size()));
+
+        // make a copy using the existing constructor and setters
+        SignatureSandwich copy = new SignatureSandwich(
+                selected.getSignatureName(),
+                selected.getBread(),
+                selected.getSandwichSize(),
+                selected.getMeat(),
+                selected.getCheese(),
+                selected.isToasted()
+        );
+        copy.initializeToppings(new ArrayList<>(selected.getRegularToppings()));
+        copy.initializeSauces(new ArrayList<>(selected.getSauces()));
+
+        // optionally customize
+        System.out.print("  Would you like to customize it? (y/n): ");
+        if (scanner.nextLine().trim().equalsIgnoreCase("y")) {
+            runRemoveToppingScreen(copy);
+            runAddToppingScreen(copy);
+            
+            runRemoveSauceScreen(copy);
+            runAddSauceScreen(copy);
+        }
+
+        return copy;
+    }
+
+    private void runAddToppingScreen(SignatureSandwich copy) {
+    }
+
 
     private Chips buildChips() {
         displayOptions("Select a brand of chips:", menu.getChips());

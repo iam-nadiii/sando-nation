@@ -8,6 +8,4 @@ public class Meat extends PremiumTopping {
                 extraPriceFour, extraPriceEight, extraPriceTwelve);
     }
 
-    @Override
-    public String getDescription() { return "Meat: " + getName(); }
 }

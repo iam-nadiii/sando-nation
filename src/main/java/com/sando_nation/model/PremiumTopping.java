@@ -22,11 +22,11 @@ public abstract class PremiumTopping extends Topping {
     public double calculatePrice(String size, boolean wantsExtra) {
         if (size == null) return 0.00;
         if (size.equalsIgnoreCase("4 inch"))
-            return wantsExtra ? extraPriceFour  : priceFour;
+            return wantsExtra ? extraPriceFour + priceFour  : priceFour;
         if (size.equalsIgnoreCase("8 inch"))
-            return wantsExtra ? extraPriceEight : priceEight;
+            return wantsExtra ? extraPriceEight + priceEight : priceEight;
         if (size.equalsIgnoreCase("12 inch"))
-            return wantsExtra ? extraPriceTwelve : priceTwelve;
+            return wantsExtra ? extraPriceTwelve + priceTwelve : priceTwelve;
         return 0.00;
     }
 
@@ -34,4 +34,6 @@ public abstract class PremiumTopping extends Topping {
     public double getPrice() {
         return calculatePrice(this.getSize(), this.wantsExtra);
     }
+    @Override
+    public String getDescription() { return getName(); }
 }

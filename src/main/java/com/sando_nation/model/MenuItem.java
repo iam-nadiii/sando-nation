@@ -1,31 +1,24 @@
 package com.sando_nation.model;
 
-public abstract class MenuItem implements PricedItem{
+public abstract class MenuItem implements PricedItem {
     protected String name;
+    protected String size;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public MenuItem(){
-
-    }
+    public MenuItem() {}
 
     public MenuItem(String name) {
         this.name = name;
     }
 
-    @Override
-    public double getPrice(){
-        return 0;
-    }
+    public String getName()           { return name; }
+    public void   setName(String name){ this.name = name; }
+
+    public String getSize()           { return size; }
+    public void   setSize(String size){ this.size = size; }
 
     @Override
-    public String getDescription(){
-        return name;
-    }
+    public abstract double getPrice();
+
+    @Override
+    public abstract String getDescription();
 }

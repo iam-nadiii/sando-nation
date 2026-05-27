@@ -1,84 +1,89 @@
 package com.sando_nation.model;
 
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Sandwich implements PricedItem {
-    SandwichSize sandwichSize;
-    Bread bread;
-    Meat meat;
-    Cheese cheese;
-    List<Topping> regularTopping;
+    private SandwichSize        sandwichSize;
+    private Bread               bread;
+    private Meat                meat;
+    private Cheese              cheese;
+    private List<RegularTopping> regularToppings;
+    private boolean             isToasted;
 
-    public Sandwich(SandwichSize sandwichSize, Bread bread, Meat meat,
-                    Cheese cheese, List<Topping> regularToppings){
-
+    public Sandwich() {
+        this.regularToppings = new ArrayList<>();
     }
 
-    public Sandwich(){}
+    public SandwichSize getSandwichSize()               { return sandwichSize; }
+    public Bread        getBread()                      { return bread; }
+    public Meat         getMeat()                       { return meat; }
+    public Cheese       getCheese()                     { return cheese; }
+    public List<RegularTopping> getRegularToppings()    { return regularToppings; }
+    public boolean      isToasted()                     { return isToasted; }
+    public void         setToasted(boolean toasted)     { this.isToasted = toasted; }
 
-    public SandwichSize getSandwichSize() {
-        return sandwichSize;
-    }
-
-    public void setSandwichSize(SandwichSize sandwichSize) {
-        this.sandwichSize = sandwichSize;
-    }
-
-    public Bread getBread() {
-        return bread;
+    public void setSandwichSize(SandwichSize size) {
+        this.sandwichSize = size;
+        if (meat   != null) meat.setSize(size.getSize());
+        if (cheese != null) cheese.setSize(size.getSize());
     }
 
     public void setBread(Bread bread) {
         this.bread = bread;
     }
 
-    public Meat getMeat() {
-        return meat;
-    }
-
     public void setMeat(Meat meat) {
         this.meat = meat;
-    }
-
-    public Cheese getCheese() {
-        return cheese;
+        if (sandwichSize != null) meat.setSize(sandwichSize.getSize());
     }
 
     public void setCheese(Cheese cheese) {
         this.cheese = cheese;
+        if (sandwichSize != null) cheese.setSize(sandwichSize.getSize());
     }
 
-    public List<Topping> getRegularTopping() {
-        return regularTopping;
+    public void initializeToppings(List<RegularTopping> allToppings) {
+        this.regularToppings = new ArrayList<>(allToppings);
     }
 
-    public void setRegularTopping(List<Topping> regularTopping) {
-        this.regularTopping = regularTopping;
+    public void removeTopping(RegularTopping topping) {
+        regularToppings.remove(topping);
     }
 
     @Override
-    public String toString() {
-        return "Sandwich{" +
-                "sandwichSize=" + sandwichSize.getDescription() +
-                ", bread=" + bread.getDescription() +
-                ", meat=" + meat.getDescription() +
-                ", cheese=" + cheese.getDescription() +
-                ", regularTopping=" + regularTopping.toString() +
-                '}';
-    }
+    public String getName() { return "Sandwich"; }
 
     @Override
     public double getPrice() {
-        return bread.getPrice() + meat.getPrice() + cheese.getPrice() + sandwichSize.getPrice();
+        double total = 0.00;
+        if (sandwichSize != null) total += sandwichSize.getPrice();
+        if (meat         != null) total += meat.getPrice();
+        if (cheese       != null) total += cheese.getPrice();
+        return total;
     }
 
     @Override
-    public String getDescription(){
-        return toString();
+    public String getDescription() { return toString(); }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n  --- Sandwich ---\n");
+        sb.append("  Size   : ").append(sandwichSize != null ? sandwichSize.getDescription() : "none").append("\n");
+        sb.append("  Bread  : ").append(bread  != null ? bread.getName()  : "none").append("\n");
+        sb.append("  Meat   : ").append(meat   != null ? meat.getName()   : "none");
+        if (meat != null) sb.append(meat.isWantsExtra() ? " (extra)" : "");
+        sb.append("\n");
+        sb.append("  Cheese : ").append(cheese != null ? cheese.getName() : "none");
+        if (cheese != null) sb.append(cheese.isWantsExtra() ? " (extra)" : "");
+        sb.append("\n");
+        if (!regularToppings.isEmpty()) {
+            sb.append("  Toppings:\n");
+            regularToppings.forEach(t -> sb.append("    + ").append(t.getName()).append("\n"));
+        }
+        sb.append("  Toasted: ").append(isToasted ? "Yes" : "No").append("\n");
+        sb.append(String.format("  Subtotal: $%.2f", getPrice())).append("\n");
+        return sb.toString();
     }
-
 }
-

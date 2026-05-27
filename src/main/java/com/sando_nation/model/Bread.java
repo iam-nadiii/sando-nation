@@ -1,13 +1,15 @@
 package com.sando_nation.model;
 
-public class Bread extends MenuItem{
 
-    public Bread(String name){
+public class Bread extends MenuItem {
+
+    public Bread(String name) {
         super(name);
     }
 
     @Override
-    public String getDescription(){
-        return this.getName();
-    }
+    public double getPrice() { return 0.00; }
+
+    @Override
+    public String getDescription() { return getName(); }
 }

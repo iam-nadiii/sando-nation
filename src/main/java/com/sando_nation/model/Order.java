@@ -25,6 +25,13 @@ public class Order {
         sandwiches.add(sandwich);
     }
 
+    public void removeAnItem(int index) {
+        if (index >= 0 && index < sandwiches.size()) {
+            sandwiches.remove(index);
+            System.out.println("  Item removed from order.");
+        }
+    }
+
     public double getTotal() {
         return sandwiches.stream()
                 .mapToDouble(Sandwich::getPrice)
@@ -37,13 +44,13 @@ public class Order {
         sb.append("\n=============================\n");
         sb.append("  Order #").append(orderNumber).append("\n");
         sb.append("=============================\n");
-        List<Sandwich> reversed = new ArrayList<>(sandwiches);
-        Collections.reverse(reversed);
-        IntStream.range(0, reversed.size())
+//        List<Sandwich> reversed = new ArrayList<>(sandwiches);
+//        Collections.reverse(reversed);
+        IntStream.range(0, sandwiches.size())
                 .forEach(i ->
                         sb.append(String.format("%d. %s%n",
                                 i + 1,
-                                reversed.get(i).toString()))
+                                sandwiches.get(i).toString()))
                 );
         sb.append("─────────────────────────────\n");
         sb.append(String.format("  Order Total: $%.2f", getTotal())).append("\n");

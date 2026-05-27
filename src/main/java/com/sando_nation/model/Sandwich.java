@@ -95,6 +95,10 @@ public class Sandwich implements PricedItem {
             sb.append("  Toppings:\n");
             regularToppings.forEach(t -> sb.append("    + ").append(t.getName()).append("\n"));
         }
+        if (!sauces.isEmpty()) {
+            sb.append("  Sauces:\n");
+            sauces.forEach(t -> sb.append("    + ").append(t.getName()).append("\n"));
+        }
         sb.append("  Toasted: ").append(isToasted ? "Yes" : "No").append("\n");
         sb.append(String.format("  Subtotal: $%.2f", getPrice())).append("\n");
         return sb.toString();

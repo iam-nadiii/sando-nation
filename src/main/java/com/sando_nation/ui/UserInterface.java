@@ -41,7 +41,9 @@ public class UserInterface {
                   Order Screen
                 ============================
                   1) Add Sandwich
-                  2) Checkout
+                  2) Add Drinks
+                  3) Add Chips
+                  4) Checkout
                   0) Cancel Order
                 Enter command: \s""");
 
@@ -49,11 +51,23 @@ public class UserInterface {
             switch (choice) {
                 case "1" -> {
                     Sandwich sandwich = buildSandwich();
-                    order.addSandwich(sandwich);
+                    order.addItem(sandwich);
                     System.out.println("\n  Sandwich added!");
                     System.out.println(sandwich);
                 }
-                case "2" -> {
+                case "2" ->{
+                    Drink drink = buildDrink();
+                    order.addItem(drink);
+                    System.out.println("\n  Drink added!");
+                    System.out.println(drink);
+                }
+                case "3" ->{
+                    Chips chips = buildChips();
+                    order.addItem(chips);
+                    System.out.println("\n Chips added!");
+                    System.out.println(chips);
+                }
+                case "4" -> {
                     checkout(order);
                     inOrder = false;
                 }
@@ -64,6 +78,36 @@ public class UserInterface {
                 default -> System.out.println("  Invalid input.");
             }
         }
+    }
+
+    private Chips buildChips() {
+        displayOptions("Select a brand of chips:", menu.getChips());
+        Chips selected = menu.getChips().get(chooseAMenuItem(menu.getChips().size()));
+        return selected;
+    }
+
+    private Drink buildDrink() {
+        Drink drink = new Drink();
+
+        // pick the drink flavor
+        displayOptions("Select a drink:", menu.getDrinks());
+        Drink selected = menu.getDrinks().get(chooseAMenuItem(menu.getDrinks().size()));
+
+        // pick the size
+        System.out.println("\n  Select a size:");
+        System.out.println("  ─────────────────────");
+        System.out.println("  1. Small");
+        System.out.println("  2. Medium");
+        System.out.println("  3. Large");
+        int sizeChoice = chooseAMenuItem(3);
+        switch (sizeChoice) {
+            case 1 -> selected.setSize("small");
+            case 2 -> selected.setSize("medium");
+            case 3 -> selected.setSize("large");
+            default -> System.out.println("Invalid input. Please select a number between 1-3.");
+        }
+
+        return selected;
     }
 
     private Sandwich buildSandwich() {
@@ -159,7 +203,7 @@ public class UserInterface {
                 case "x" -> {
                     runRemoveAnItemScreen(order);
 
-                    if (order.getSandwiches().isEmpty()) {
+                    if (order.getItems().isEmpty()) {
                         slowPrint("  Order is now empty.");
                         checkingOut = false;
                     }
@@ -184,16 +228,16 @@ public class UserInterface {
     }
 
     private void runRemoveAnItemScreen(Order order) {
-        if (order.getSandwiches().isEmpty()) {
+        if (order.getItems().isEmpty()) {
             System.out.println("  No items in your order.");
             return;
         }
 
-        displayOptions("Choose the sandwich to remove:", order.getSandwiches());
-        int choice = chooseAMenuItem(order.getSandwiches().size());
+        displayOptions("Choose the item to remove:", order.getItems());
+        int choice = chooseAMenuItem(order.getItems().size());
         if (choice >= 0) {
-            order.removeAnItem(choice);
-            System.out.println("  Sandwich removed.");
+            order.removeItem(choice);
+            System.out.println("  Item removed.");
         }
     }
 

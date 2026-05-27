@@ -1,8 +1,8 @@
 package com.sando_nation.model;
 
 public abstract class MenuItem implements PricedItem {
-    protected String name;
-    protected String size;
+    private String name;
+    private String size;
 
     public MenuItem() {}
 

@@ -9,6 +9,8 @@ public class Menu {
     List<Sauce> sauces;
     List<Meat> meats;
     List<Cheese> cheeses;
+    List<Drink> drinks;
+    List<Chips> chips;
 
     public Menu() {
         breads = new ArrayList<>();
@@ -54,6 +56,18 @@ public class Menu {
         sauces.add(new Sauce("ranch"));
         sauces.add(new Sauce("thousand islands"));
         sauces.add(new Sauce("vinaigrette"));
+
+        drinks = new ArrayList<>();
+        drinks.add(new Drink("Coke", 2, 2.50,3));
+        drinks.add(new Drink("Sprite", 2, 2.50,3));
+        drinks.add(new Drink("Fanta", 2, 2.50,3));
+        drinks.add(new Drink("Ginger Ale", 2, 2.50,3));
+
+        chips = new ArrayList<>();
+        chips.add(new Chips("Lays", 1.50));
+        chips.add(new Chips("Cheetos", 1.50));
+        chips.add(new Chips("Fritos", 1.50));
+
     }
 
     public List<Bread>          getBreads()   { return breads; }
@@ -62,5 +76,7 @@ public class Menu {
     public List<Cheese>         getCheeses()  { return cheeses; }
     public List<RegularTopping> getToppings() { return regularToppings; }
     public List<Sauce> getSauces() { return sauces; }
+    public List<Drink> getDrinks() { return drinks; }
+    public List<Chips> getChips() { return chips;}
 
 }

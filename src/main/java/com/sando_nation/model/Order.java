@@ -3,38 +3,41 @@ package com.sando_nation.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Order {
-    private int            orderNumber;
-    private List<Sandwich> sandwiches;
-
-    public Order() {
-        this.sandwiches = new ArrayList<>();
-    }
+    private int              orderNumber;
+    private List<PricedItem> items;  // ← holds anything that has a price
 
     public Order(int orderNumber) {
         this.orderNumber = orderNumber;
-        this.sandwiches  = new ArrayList<>();
+        this.items       = new ArrayList<>();
     }
 
-    public int            getOrderNumber()  { return orderNumber; }
-    public List<Sandwich> getSandwiches()   { return sandwiches; }
-
-    public void addSandwich(Sandwich sandwich) {
-        sandwiches.add(sandwich);
+    public void addItem(PricedItem item) {
+        items.add(item);
     }
 
-    public void removeAnItem(int index) {
-        if (index >= 0 && index < sandwiches.size()) {
-            sandwiches.remove(index);
-            System.out.println("  Item removed from order.");
+    public void removeItem(int index) {
+        if (index >= 0 && index < items.size()) {
+            items.remove(index);
         }
     }
 
+    public List<PricedItem> getItems() { return items; }
+
+    // convenience methods if you need to filter by type
+    public List<Sandwich> getSandwiches() {
+        return items.stream()
+                .filter(i -> i instanceof Sandwich)
+                .map(i -> (Sandwich) i)
+                .collect(Collectors.toList());
+    }
+
     public double getTotal() {
-        return sandwiches.stream()
-                .mapToDouble(Sandwich::getPrice)
+        return items.stream()
+                .mapToDouble(PricedItem::getPrice)
                 .sum();
     }
 
@@ -44,14 +47,9 @@ public class Order {
         sb.append("\n=============================\n");
         sb.append("  Order #").append(orderNumber).append("\n");
         sb.append("=============================\n");
-//        List<Sandwich> reversed = new ArrayList<>(sandwiches);
-//        Collections.reverse(reversed);
-        IntStream.range(0, sandwiches.size())
-                .forEach(i ->
-                        sb.append(String.format("%d. %s%n",
-                                i + 1,
-                                sandwiches.get(i).toString()))
-                );
+        IntStream.iterate(items.size() - 1, i -> i >= 0, i -> i - 1)
+                .mapToObj(items::get)
+                .forEach(item -> sb.append(item.toString()).append("\n"));
         sb.append("─────────────────────────────\n");
         sb.append(String.format("  Order Total: $%.2f", getTotal())).append("\n");
         sb.append("=============================\n");

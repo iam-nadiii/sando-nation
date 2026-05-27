@@ -10,9 +10,11 @@ public class Sandwich implements PricedItem {
     private Cheese              cheese;
     private List<RegularTopping> regularToppings;
     private boolean             isToasted;
+    private List<Sauce> sauces;
 
     public Sandwich() {
         this.regularToppings = new ArrayList<>();
+        this.sauces = new ArrayList<>();
     }
 
     public SandwichSize getSandwichSize()               { return sandwichSize; }
@@ -22,6 +24,9 @@ public class Sandwich implements PricedItem {
     public List<RegularTopping> getRegularToppings()    { return regularToppings; }
     public boolean      isToasted()                     { return isToasted; }
     public void         setToasted(boolean toasted)     { this.isToasted = toasted; }
+    public List<Sauce> getSauces() {
+        return sauces;
+    }
 
     public void setSandwichSize(SandwichSize size) {
         this.sandwichSize = size;
@@ -49,6 +54,14 @@ public class Sandwich implements PricedItem {
 
     public void removeTopping(RegularTopping topping) {
         regularToppings.remove(topping);
+    }
+
+    public void initializeSauces(List<Sauce> allSauces) {
+        this.sauces = new ArrayList<>(allSauces);
+    }
+
+    public void removeSauce(Sauce sauce) {
+        sauces.remove(sauce);
     }
 
     @Override

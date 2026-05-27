@@ -6,6 +6,7 @@ public class Menu {
     List<Bread> breads;
     List<SandwichSize> sandwichSizes;
     List<RegularTopping> regularToppings;
+    List<Sauce> sauces;
     List<Meat> meats;
     List<Cheese> cheeses;
 
@@ -45,6 +46,14 @@ public class Menu {
         regularToppings.add(new RegularTopping("Pickles"));
         regularToppings.add(new RegularTopping("Guacamole"));
         regularToppings.add(new RegularTopping("Mushrooms"));
+
+        sauces = new ArrayList<>();
+        sauces.add(new Sauce("mayo"));
+        sauces.add(new Sauce("mustard"));
+        sauces.add(new Sauce("ketchup"));
+        sauces.add(new Sauce("ranch"));
+        sauces.add(new Sauce("thousand islands"));
+        sauces.add(new Sauce("vinaigrette"));
     }
 
     public List<Bread>          getBreads()   { return breads; }
@@ -52,4 +61,6 @@ public class Menu {
     public List<Meat>           getMeats()    { return meats; }
     public List<Cheese>         getCheeses()  { return cheeses; }
     public List<RegularTopping> getToppings() { return regularToppings; }
+    public List<Sauce> getSauces() { return sauces; }
+
 }

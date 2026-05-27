@@ -94,7 +94,21 @@ public class UserInterface {
         // initialize sandwich with all toppings first
         sandwich.initializeToppings(menu.getToppings());
 
+        runRemoveToppingScreen(sandwich);
 
+        // initialize sandwich with all sauces first
+        sandwich.initializeSauces(menu.getSauces());
+
+        runRemoveSauceScreen(sandwich);
+
+        // toasted
+        System.out.print("  Would you like it toasted? (y/n): ");
+        sandwich.setToasted(scanner.nextLine().trim().equalsIgnoreCase("y"));
+
+        return sandwich;
+    }
+
+    private void runRemoveToppingScreen(Sandwich sandwich) {
         boolean removingToppings = true;
         while (removingToppings) {
             displayOptions("Select a topping to remove (0 when done):", sandwich.getRegularToppings());
@@ -108,31 +122,64 @@ public class UserInterface {
                 System.out.println("  Removed: " + topping.getName());
             }
         }
+    }
 
-        // toasted
-        System.out.print("  Would you like it toasted? (y/n): ");
-        sandwich.setToasted(scanner.nextLine().trim().equalsIgnoreCase("y"));
-
-        return sandwich;
+    private void runRemoveSauceScreen(Sandwich sandwich) {
+        boolean removingSauces = true;
+        while (removingSauces) {
+            displayOptions("Select a sauce to remove (0 when done):", sandwich.getSauces());
+            System.out.println("  0. Done");
+            int choice = chooseAMenuItem(sandwich.getSauces().size());
+            if (choice == -1) {
+                removingSauces = false;
+            } else {
+                Sauce sauce = sandwich.getSauces().get(choice);
+                sandwich.removeSauce(sauce);
+                System.out.println("  Removed: " + sauce.getName());
+            }
+        }
     }
 
 
     private void checkout(Order order) {
-        System.out.println(order);
-        System.out.println("  y) Confirm order");
-        System.out.println("  x) Remove an item");
-        System.out.println("  n) Cancel order");
-        String choice = scanner.nextLine().toLowerCase().trim();
 
-        if (choice.equals("x")) {
-            runRemoveAnItemScreen(order);
-            checkout(order); // ← show updated order and ask again
-            return;
-        }
-        if (choice.equals("y")) {
-            System.out.println("  Order confirmed! Thank you for choosing Sando-Nation!");
-        } else {
-            System.out.println("  Order cancelled.");
+        boolean checkingOut = true;
+
+        while (checkingOut) {
+
+            System.out.println(order);
+            System.out.println("  y) Confirm order");
+            System.out.println("  x) Remove an item");
+            System.out.println("  n) Cancel order");
+
+            String choice = scanner.nextLine().toLowerCase().trim();
+
+            switch (choice) {
+
+                case "x" -> {
+                    runRemoveAnItemScreen(order);
+
+                    if (order.getSandwiches().isEmpty()) {
+                        slowPrint("  Order is now empty.");
+                        checkingOut = false;
+                    }
+                }
+
+                case "y" -> {
+
+                    slowPrint("  Processing order...");
+                    slowPrint("  Order confirmed! Thank you for choosing Sando-Nation!");
+
+                    checkingOut = false;
+                }
+
+                case "n" -> {
+                    slowPrint("  Order cancelled.");
+                    checkingOut = false;
+                }
+
+                default -> slowPrint("  Invalid input.");
+            }
         }
     }
 
@@ -171,8 +218,22 @@ public class UserInterface {
         }
     }
 
-    public boolean getUserWantsExtra(String topping) {
+    private boolean getUserWantsExtra(String topping) {
         System.out.print("  Do you want extra " + topping + "? (y/n): ");
         return scanner.nextLine().trim().equalsIgnoreCase("y");
     }
+
+    private static final int DELAY = 3000;
+
+    private void slowPrint(String message) {
+
+        try {
+            Thread.sleep(DELAY);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        System.out.println(message);
+    }
+
 }

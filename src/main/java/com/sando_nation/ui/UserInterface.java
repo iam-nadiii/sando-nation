@@ -1,7 +1,10 @@
 package com.sando_nation.ui;
 
+import com.sando_nation.data.Receipt;
+import com.sando_nation.data.ReceiptFileHandler;
 import com.sando_nation.model.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.IntStream;
@@ -212,6 +215,9 @@ public class UserInterface {
                 case "y" -> {
 
                     slowPrint("  Processing order...");
+                    ReceiptFileHandler receiptFileHandler = new ReceiptFileHandler();
+                    Receipt receipt = new Receipt(LocalDateTime.now(), order);
+                    receiptFileHandler.generateReceipt(receipt);
                     slowPrint("  Order confirmed! Thank you for choosing Sando-Nation!");
 
                     checkingOut = false;

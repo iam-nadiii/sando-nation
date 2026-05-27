@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 public class ReceiptFileHandler {
 
 
-    public void generateReceipt(Receipt receipt){
+    public boolean generateReceipt(Receipt receipt){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
         String fileName = receipt.getTime().format(formatter) + ".txt";
         try {
@@ -18,9 +18,11 @@ public class ReceiptFileHandler {
             bufferedWriter.write(String.valueOf(receipt.getOrder()));
 
             bufferedWriter.close();
+            return true;
 
         } catch (IOException e){
             System.out.println("ERROR! Could not generate receipt: " + e.getMessage());
+            return false;
         }
 
     }

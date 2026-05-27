@@ -215,10 +215,16 @@ public class UserInterface {
                 case "y" -> {
 
                     slowPrint("  Processing order...");
+
                     ReceiptFileHandler receiptFileHandler = new ReceiptFileHandler();
                     Receipt receipt = new Receipt(LocalDateTime.now(), order);
-                    receiptFileHandler.generateReceipt(receipt);
-                    slowPrint("  Order confirmed! Thank you for choosing Sando-Nation!");
+
+                    boolean success = receiptFileHandler.generateReceipt(receipt);
+                    if(success) {
+                        slowPrint("  Order confirmed! Thank you for choosing Sando-Nation!");
+                    } else {
+                    slowPrint("  Something went wrong generating your receipt. Please see staff.");
+                    }
 
                     checkingOut = false;
                 }

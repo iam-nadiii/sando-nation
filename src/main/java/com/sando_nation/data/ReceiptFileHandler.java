@@ -12,7 +12,7 @@ public class ReceiptFileHandler {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
         String fileName = receipt.getTime().format(formatter) + ".txt";
         try {
-            FileWriter fileWriter = new FileWriter(fileName);
+            FileWriter fileWriter = new FileWriter("./Receipts/" + fileName);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
             bufferedWriter.write(String.valueOf(receipt.getOrder()));

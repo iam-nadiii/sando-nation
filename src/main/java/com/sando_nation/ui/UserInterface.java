@@ -14,6 +14,7 @@ import java.util.stream.IntStream;
 public class UserInterface {
     private final Scanner scanner = new Scanner(System.in);
     private final Menu    menu    = new Menu();
+    private static final int DELAY = 3000;
 
     public void runHomeScreen() {
         boolean isRunning = true;
@@ -96,9 +97,8 @@ public class UserInterface {
     private SignatureSandwich selectSignatureSandwich() {
         displayOptions("Select a signature sandwich:", menu.getSignatureSandwiches());
         SignatureSandwich selected = menu.getSignatureSandwiches()
-                .get(chooseAMenuItem(menu.getSignatureSandwiches().size()));
+                .get(promptMenuSelection(menu.getSignatureSandwiches().size()));
 
-        // make a copy
         SignatureSandwich copy = new SignatureSandwich(
                 selected.getSignatureName(),
                 selected.getBread(),
@@ -110,15 +110,17 @@ public class UserInterface {
         copy.initializeToppings(new ArrayList<>(selected.getRegularToppings()));
         copy.initializeSauces(new ArrayList<>(selected.getSauces()));
 
-        // show what it comes with
         System.out.println(copy);
 
         System.out.print("  Would you like to customize it? (y/n): ");
-        if (!scanner.nextLine().trim().equalsIgnoreCase("y")) {
-            return copy;
+        if (scanner.nextLine().trim().equalsIgnoreCase("y")) {
+            runCustomizeSignatureSandwichScreen(copy); // ← extracted
         }
 
-        // customization loop
+        return copy;
+    }
+
+    private void runCustomizeSignatureSandwichScreen(SignatureSandwich sandwich) {
         boolean customizing = true;
         while (customizing) {
             System.out.print("""
@@ -131,19 +133,16 @@ public class UserInterface {
             Enter command: \s""");
 
             switch (scanner.nextLine().trim()) {
-                case "1" -> runRemoveToppingScreen(copy);
-                case "2" -> runAddToppingScreen(copy);
-                case "3" -> runRemoveSauceScreen(copy);
-                case "4" -> runAddSauceScreen(copy);
+                case "1" -> runRemoveToppingScreen(sandwich);
+                case "2" -> runAddToppingScreen(sandwich);
+                case "3" -> runRemoveSauceScreen(sandwich);
+                case "4" -> runAddSauceScreen(sandwich);
                 case "0" -> customizing = false;
                 default  -> System.out.println("  Invalid input.");
             }
 
-            // show updated sandwich after each change
-            if (customizing) System.out.println(copy);
+            if (customizing) System.out.println(sandwich);
         }
-
-        return copy;
     }
 
 
@@ -151,16 +150,15 @@ public class UserInterface {
 
     private Chips buildChips() {
         displayOptions("Select a brand of chips:", menu.getChips());
-        Chips selected = menu.getChips().get(chooseAMenuItem(menu.getChips().size()));
+        Chips selected = menu.getChips().get(promptMenuSelection(menu.getChips().size()));
         return selected;
     }
 
     private Drink buildDrink() {
-        Drink drink = new Drink();
 
         // pick the drink flavor
         displayOptions("Select a drink:", menu.getDrinks());
-        Drink selected = menu.getDrinks().get(chooseAMenuItem(menu.getDrinks().size()));
+        Drink selected = menu.getDrinks().get(promptMenuSelection(menu.getDrinks().size()));
 
         // pick the size
         System.out.println("\n  Select a size:");
@@ -168,11 +166,11 @@ public class UserInterface {
         System.out.println("  1. Small");
         System.out.println("  2. Medium");
         System.out.println("  3. Large");
-        int sizeChoice = chooseAMenuItem(3);
+        int sizeChoice = promptMenuSelection(3);
         switch (sizeChoice) {
-            case 1 -> selected.setSize("small");
-            case 2 -> selected.setSize("medium");
-            case 3 -> selected.setSize("large");
+            case 0 -> selected.setSize("small");
+            case 1 -> selected.setSize("medium");
+            case 2 -> selected.setSize("large");
             default -> System.out.println("Invalid input. Please select a number between 1-3.");
         }
 
@@ -184,23 +182,23 @@ public class UserInterface {
 
         // size
         displayOptions("Select a size:", menu.getSizes());
-        SandwichSize size = menu.getSizes().get(chooseAMenuItem(menu.getSizes().size()));
+        SandwichSize size = menu.getSizes().get(promptMenuSelection(menu.getSizes().size()));
         sandwich.setSandwichSize(size);
 
         // bread
         displayOptions("Select your bread:", menu.getBreads());
-        Bread bread = menu.getBreads().get(chooseAMenuItem(menu.getBreads().size()));
+        Bread bread = menu.getBreads().get(promptMenuSelection(menu.getBreads().size()));
         sandwich.setBread(bread);
 
         // meat
         displayOptions("Select your meat:", menu.getMeats());
-        Meat meat = menu.getMeats().get(chooseAMenuItem(menu.getMeats().size()));
+        Meat meat = menu.getMeats().get(promptMenuSelection(menu.getMeats().size()));
         meat.setWantsExtra(getUserWantsExtra(meat.getName()));
         sandwich.setMeat(meat);
 
         // cheese
         displayOptions("Select your cheese:", menu.getCheeses());
-        Cheese cheese = menu.getCheeses().get(chooseAMenuItem(menu.getCheeses().size()));
+        Cheese cheese = menu.getCheeses().get(promptMenuSelection(menu.getCheeses().size()));
         cheese.setWantsExtra(getUserWantsExtra(cheese.getName()));
         sandwich.setCheese(cheese);
 
@@ -226,7 +224,7 @@ public class UserInterface {
         while (removingToppings) {
             displayOptions("Select a topping to remove (0 when done):", sandwich.getRegularToppings());
             System.out.println("  0. Done");
-            int choice = chooseAMenuItem(sandwich.getRegularToppings().size());
+            int choice = promptMenuSelection(sandwich.getRegularToppings().size());
             if (choice == -1) {
                 removingToppings = false;
             } else {
@@ -242,7 +240,7 @@ public class UserInterface {
         while (removingSauces) {
             displayOptions("Select a sauce to remove (0 when done):", sandwich.getSauces());
             System.out.println("  0. Done");
-            int choice = chooseAMenuItem(sandwich.getSauces().size());
+            int choice = promptMenuSelection(sandwich.getSauces().size());
             if (choice == -1) {
                 removingSauces = false;
             } else {
@@ -265,7 +263,7 @@ public class UserInterface {
         }
 
         displayOptions("Select a topping to add:", available);
-        int choice = chooseAMenuItem(available.size());
+        int choice = promptMenuSelection(available.size());
         if (choice >= 0) {
             sandwich.addTopping(available.get(choice));
             System.out.println("  Added: " + available.get(choice).getName());
@@ -283,7 +281,7 @@ public class UserInterface {
         }
 
         displayOptions("Select a sauce to add:", available);
-        int choice = chooseAMenuItem(available.size());
+        int choice = promptMenuSelection(available.size());
         if (choice >= 0) {
             sandwich.addSauce(available.get(choice));
             System.out.println("  Added: " + available.get(choice).getName());
@@ -348,7 +346,7 @@ public class UserInterface {
         }
 
         displayOptions("Choose the item to remove:", order.getItems());
-        int choice = chooseAMenuItem(order.getItems().size());
+        int choice = promptMenuSelection(order.getItems().size());
         if (choice >= 0) {
             order.removeItem(choice);
             System.out.println("  Item removed.");
@@ -362,7 +360,7 @@ public class UserInterface {
                 .forEach(i -> System.out.printf("  %d. %s%n", i + 1, options.get(i).getDescription()));
     }
 
-    private int chooseAMenuItem(int max) {
+    private int promptMenuSelection(int max) {
         while (true) {
             System.out.print("  Make your selection: ");
             try {
@@ -381,7 +379,7 @@ public class UserInterface {
         return scanner.nextLine().trim().equalsIgnoreCase("y");
     }
 
-    private static final int DELAY = 3000;
+
 
     private void slowPrint(String message) {
 

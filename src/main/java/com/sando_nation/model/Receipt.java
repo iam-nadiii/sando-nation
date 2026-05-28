@@ -1,6 +1,4 @@
-package com.sando_nation.data;
-
-import com.sando_nation.model.Order;
+package com.sando_nation.model;
 
 import java.time.*;
 

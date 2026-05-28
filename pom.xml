@@ -31,7 +31,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>${javafx.maven.plugin.version}</version>
                 <configuration>
-                    <mainClass>JavaFx</mainClass>
+                    <mainClass>com.sando_nation.JavaFx</mainClass>
                 </configuration>
             </plugin>
         </plugins>

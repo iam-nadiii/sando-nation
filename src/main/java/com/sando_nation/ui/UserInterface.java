@@ -117,6 +117,7 @@ public class UserInterface {
             
             runRemoveSauceScreen(copy);
             runAddSauceScreen(copy);
+
         }
 
         return copy;

@@ -7,8 +7,6 @@ public class Bread extends MenuItem {
         super(name);
     }
 
-    @Override
-    public double getPrice() { return 0.00; }
 
     @Override
     public String getDescription() { return getName(); }

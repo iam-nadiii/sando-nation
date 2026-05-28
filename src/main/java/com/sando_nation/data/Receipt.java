@@ -29,15 +29,7 @@ public class Receipt {
         this.order = order;
     }
 
-    @Override
-    public String toString() {
-        return "Receipt{" +
-                "time=" + time +
-                ", order=" + order +
-                '}';
-    }
 }
 
 
 
-//(yyyyMMdd-hhmmss.txt - i.e. 20230329-121523.txt)

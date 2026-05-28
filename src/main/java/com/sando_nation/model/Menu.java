@@ -3,15 +3,15 @@ package com.sando_nation.model;
 import java.util.*;
 
 public class Menu {
-    List<Bread> breads;
-    List<SandwichSize> sandwichSizes;
-    List<RegularTopping> regularToppings;
-    List<Sauce> sauces;
-    List<Meat> meats;
-    List<Cheese> cheeses;
-    List<Drink> drinks;
-    List<Chips> chips;
-    List<SignatureSandwich> signatureSandwiches;
+    private List<Bread> breads;
+    private List<SandwichSize> sandwichSizes;
+    private List<RegularTopping> regularToppings;
+    private List<Sauce> sauces;
+    private List<Meat> meats;
+    private List<Cheese> cheeses;
+    private List<Drink> drinks;
+    private List<Chips> chips;
+    private List<SignatureSandwich> signatureSandwiches;
 
     public Menu() {
         breads = new ArrayList<>();
@@ -51,12 +51,12 @@ public class Menu {
         regularToppings.add(new RegularTopping("Mushrooms"));
 
         sauces = new ArrayList<>();
-        sauces.add(new Sauce("mayo"));
-        sauces.add(new Sauce("mustard"));
-        sauces.add(new Sauce("ketchup"));
-        sauces.add(new Sauce("ranch"));
-        sauces.add(new Sauce("thousand islands"));
-        sauces.add(new Sauce("vinaigrette"));
+        sauces.add(new Sauce("Mayo"));
+        sauces.add(new Sauce("Mustard"));
+        sauces.add(new Sauce("Ketchup"));
+        sauces.add(new Sauce("Ranch"));
+        sauces.add(new Sauce("Thousand islands"));
+        sauces.add(new Sauce("Vinaigrette"));
 
         drinks = new ArrayList<>();
         drinks.add(new Drink("Coke", 2, 2.50,3));
@@ -69,31 +69,37 @@ public class Menu {
         chips.add(new Chips("Cheetos", 1.50));
         chips.add(new Chips("Fritos", 1.50));
 
-        // find items by name from existing lists
-        Bread      white   = breads.stream().filter(b -> b.getName().equals("White")).findFirst().get();
-        SandwichSize eight = sandwichSizes.stream().filter(s -> s.getSize().equals("8 inch")).findFirst().get();
-        Meat       bacon   = meats.stream().filter(m -> m.getName().equals("Bacon")).findFirst().get();
-        Cheese     cheddar = cheeses.stream().filter(c -> c.getName().equals("Cheddar")).findFirst().get();
-        Meat       steak   = meats.stream().filter(m -> m.getName().equals("Steak")).findFirst().get();
-        Cheese     american = cheeses.stream().filter(c -> c.getName().equals("American")).findFirst().get();
+
 
         signatureSandwiches = new ArrayList<>();
 
-        SignatureSandwich blt = new SignatureSandwich("BLT", white, eight, bacon, cheddar, true);
-        blt.initializeToppings(regularToppings);
-        blt.removeTopping(regularToppings.stream().filter(t -> t.getName().equals("Peppers")).findFirst().get());
-        blt.removeTopping(regularToppings.stream().filter(t -> t.getName().equals("Onions")).findFirst().get());
-        blt.removeTopping(regularToppings.stream().filter(t -> t.getName().equals("Jalapenos")).findFirst().get());
-        blt.removeTopping(regularToppings.stream().filter(t -> t.getName().equals("Cucumbers")).findFirst().get());
-        blt.removeTopping(regularToppings.stream().filter(t -> t.getName().equals("Pickles")).findFirst().get());
-        blt.removeTopping(regularToppings.stream().filter(t -> t.getName().equals("Guacamole")).findFirst().get());
-        blt.removeTopping(regularToppings.stream().filter(t -> t.getName().equals("Mushrooms")).findFirst().get());
+
+        SignatureSandwich blt = new SignatureSandwich(
+                "BLT",
+                new Bread("White"),
+                new Meat("Bacon",  1.00, 2.00, 3.00, 0.50, 1.00, 1.50),
+                new Cheese("Cheddar", 0.75, 1.50, 2.25, 0.30, 0.60, 0.90),
+                true
+        );
+        blt.initializeToppings(new ArrayList<>());
+        blt.addTopping(new RegularTopping("Lettuce"));
+        blt.addTopping(new RegularTopping("Tomatoes"));
+        blt.initializeSauces(new ArrayList<>());
+        blt.addSauce(new Sauce("ranch"));
         signatureSandwiches.add(blt);
 
 
-        SignatureSandwich philly = new SignatureSandwich("Philly Cheese Steak", white, eight, steak, american, true);
-        philly.initializeToppings(regularToppings);
-        philly.removeTopping(regularToppings.stream().filter(t -> !t.getName().equals("Peppers")).findFirst().get());
+        SignatureSandwich philly = new SignatureSandwich(
+                "Philly Cheese Steak",
+                new Bread("White"),
+                new Meat("Steak",  1.00, 2.00, 3.00, 0.50, 1.00, 1.50),
+                new Cheese("American", 0.75, 1.50, 2.25, 0.30, 0.60, 0.90),
+                true
+        );
+        philly.initializeToppings(new ArrayList<>());
+        philly.addTopping(new RegularTopping("Peppers"));
+        philly.initializeSauces(new ArrayList<>());
+        philly.addSauce(new Sauce("mayo"));
         signatureSandwiches.add(philly);
 
     }

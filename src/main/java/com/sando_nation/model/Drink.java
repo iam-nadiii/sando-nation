@@ -11,9 +11,6 @@ public class Drink extends MenuItem{
         this.priceLarge = priceLarge;
     }
 
-    public Drink() {
-
-    }
 
     public double getPriceSmall() {
         return priceSmall;

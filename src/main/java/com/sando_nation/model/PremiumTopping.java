@@ -1,6 +1,6 @@
 package com.sando_nation.model;
 
-public abstract class PremiumTopping extends Topping {
+public abstract class PremiumTopping extends MenuItem {
     protected double priceFour, priceEight, priceTwelve;
     protected double extraPriceFour, extraPriceEight, extraPriceTwelve;
     protected boolean wantsExtra;

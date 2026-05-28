@@ -6,6 +6,7 @@ import com.sando_nation.model.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -14,7 +15,7 @@ import java.util.stream.IntStream;
 public class UserInterface {
     private final Scanner scanner = new Scanner(System.in);
     private final Menu    menu    = new Menu();
-    private static final int DELAY = 3000;
+    private static final int DELAY = 800;
 
     public void runHomeScreen() {
         boolean isRunning = true;
@@ -99,14 +100,20 @@ public class UserInterface {
         SignatureSandwich selected = menu.getSignatureSandwiches()
                 .get(promptMenuSelection(menu.getSignatureSandwiches().size()));
 
+        // customer picks size
+        displayOptions("Select a size:", menu.getSizes());
+        SandwichSize size = menu.getSizes()
+                .get(promptMenuSelection(menu.getSizes().size()));
+
+        // make a copy with the chosen size
         SignatureSandwich copy = new SignatureSandwich(
                 selected.getSignatureName(),
                 selected.getBread(),
-                selected.getSandwichSize(),
                 selected.getMeat(),
                 selected.getCheese(),
                 selected.isToasted()
         );
+        copy.setSandwichSize(size); // ← size applied here, propagates to meat and cheese
         copy.initializeToppings(new ArrayList<>(selected.getRegularToppings()));
         copy.initializeSauces(new ArrayList<>(selected.getSauces()));
 
@@ -114,7 +121,7 @@ public class UserInterface {
 
         System.out.print("  Would you like to customize it? (y/n): ");
         if (scanner.nextLine().trim().equalsIgnoreCase("y")) {
-            runCustomizeSignatureSandwichScreen(copy); // ← extracted
+            runCustomizeSignatureSandwichScreen(copy);
         }
 
         return copy;
@@ -219,34 +226,26 @@ public class UserInterface {
     }
 
     private void runRemoveToppingScreen(Sandwich sandwich) {
-        boolean removingToppings = true;
-        while (removingToppings) {
+        while (true) {
             displayOptions("Select a topping to remove (0 when done):", sandwich.getRegularToppings());
             System.out.println("  0. Done");
             int choice = promptMenuSelection(sandwich.getRegularToppings().size());
-            if (choice == -1) {
-                removingToppings = false;
-            } else {
-                RegularTopping topping = sandwich.getRegularToppings().get(choice);
-                sandwich.removeTopping(topping);
-                System.out.println("  Removed: " + topping.getName());
-            }
+            if (choice == -1) break;
+            RegularTopping topping = sandwich.getRegularToppings().get(choice);
+            sandwich.removeTopping(topping);
+            System.out.println("  Removed: " + topping.getName());
         }
     }
 
     private void runRemoveSauceScreen(Sandwich sandwich) {
-        boolean removingSauces = true;
-        while (removingSauces) {
+        while (true) {
             displayOptions("Select a sauce to remove (0 when done):", sandwich.getSauces());
             System.out.println("  0. Done");
             int choice = promptMenuSelection(sandwich.getSauces().size());
-            if (choice == -1) {
-                removingSauces = false;
-            } else {
-                Sauce sauce = sandwich.getSauces().get(choice);
-                sandwich.removeSauce(sauce);
-                System.out.println("  Removed: " + sauce.getName());
-            }
+            if (choice == -1) break;
+            Sauce sauce = sandwich.getSauces().get(choice);
+            sandwich.removeSauce(sauce);
+            System.out.println("  Removed: " + sauce.getName());
         }
     }
 
@@ -344,10 +343,16 @@ public class UserInterface {
             return;
         }
 
-        displayOptions("Choose the item to remove:", order.getItems());
+        // display newest first — same as Order.toString()
+        List<PricedItem> reversed = new ArrayList<>(order.getItems());
+        Collections.reverse(reversed);
+        displayOptions("Choose the item to remove:", reversed);
+
         int choice = promptMenuSelection(order.getItems().size());
         if (choice >= 0) {
-            order.removeItem(choice);
+            // map reversed index back to original list index
+            int actualIndex = order.getItems().size() - 1 - choice;
+            order.removeItem(actualIndex);
             System.out.println("  Item removed.");
         }
     }

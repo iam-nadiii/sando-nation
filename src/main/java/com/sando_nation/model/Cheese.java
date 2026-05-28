@@ -8,5 +8,5 @@ public class Cheese extends PremiumTopping {
                 extraPriceFour, extraPriceEight, extraPriceTwelve);
     }
 
-
+    @Override public String getDescription() { return getName(); }
 }

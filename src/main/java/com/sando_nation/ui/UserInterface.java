@@ -1,6 +1,6 @@
 package com.sando_nation.ui;
 
-import com.sando_nation.data.Receipt;
+import com.sando_nation.model.Receipt;
 import com.sando_nation.data.ReceiptFileHandler;
 import com.sando_nation.model.*;
 
@@ -38,8 +38,11 @@ public class UserInterface {
         slowPrint("  Goodbye!");
     }
 
+    public static int generateOrderNumber(){
+        return (int)(Math.random() * 9000) + 1000;
+    }
     public void runOrderScreen() {
-        Order   order     = new Order((int)(Math.random() * 9000) + 1000);
+        Order   order     = new Order(generateOrderNumber());
         boolean inOrder   = true;
 
         while (inOrder) {
@@ -72,7 +75,7 @@ public class UserInterface {
                 case "3" ->{
                     Chips chips = buildChips();
                     order.addItem(chips);
-                    System.out.println("\n Chips added!");
+                    System.out.println("\n  Chips added!");
                     slowPrint(chips.toString());
                 }
                 case "4" -> {
@@ -154,15 +157,17 @@ public class UserInterface {
 
     private Chips buildChips() {
         displayOptions("Select a brand of chips:", menu.getChips());
-        Chips selected = menu.getChips().get(promptMenuSelection(menu.getChips().size()));
-        return selected;
+        return menu.getChips().get(promptMenuSelection(menu.getChips().size()));
     }
 
     private Drink buildDrink() {
 
         // pick the drink flavor
         displayOptions("Select a drink:", menu.getDrinks());
-        Drink selected = menu.getDrinks().get(promptMenuSelection(menu.getDrinks().size()));
+        Drink template = menu.getDrinks().get(promptMenuSelection(menu.getDrinks().size()));
+        Drink selected = new Drink(template.getName(), template.getPriceSmall(),
+                template.getPriceMedium(), template.getPriceLarge());
+        selected.setSize("small");
 
         // pick the size
         System.out.println("\n  Select a size:");
@@ -285,6 +290,7 @@ public class UserInterface {
 
     private void checkout(Order order) {
 
+        ReceiptFileHandler receiptFileHandler = new ReceiptFileHandler();
         boolean checkingOut = true;
 
         while (checkingOut) {
@@ -311,7 +317,7 @@ public class UserInterface {
 
                     slowPrint("  Processing order...");
 
-                    ReceiptFileHandler receiptFileHandler = new ReceiptFileHandler();
+
                     Receipt receipt = new Receipt(LocalDateTime.now(), order);
 
                     boolean success = receiptFileHandler.generateReceipt(receipt);
@@ -367,6 +373,7 @@ public class UserInterface {
             try {
                 int choice = Integer.parseInt(scanner.nextLine().trim());
                 if (choice == 0) return -1;
+//                used -1 so that promptMenuSelection() can be used for arrays and lists as well
                 if (choice >= 1 && choice <= max) return choice - 1;
                 System.out.println("  Please enter a number between 1 and " + max + ".");
             } catch (NumberFormatException e) {
@@ -380,7 +387,7 @@ public class UserInterface {
         return scanner.nextLine().trim().equalsIgnoreCase("y");
     }
 
-    private void slowPrint(String message) {
+    private static void slowPrint(String message) {
 
         try {
             Thread.sleep(DELAY);

@@ -1,10 +1,7 @@
 package com.sando_nation.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.*;
+import java.util.stream.*;
 
 public class Order {
     private int              orderNumber;
@@ -27,13 +24,6 @@ public class Order {
 
     public List<PricedItem> getItems() { return items; }
 
-    // convenience methods if you need to filter by type
-    public List<Sandwich> getSandwiches() {
-        return items.stream()
-                .filter(i -> i instanceof Sandwich)
-                .map(i -> (Sandwich) i)
-                .collect(Collectors.toList());
-    }
 
     public double getTotal() {
         return items.stream()

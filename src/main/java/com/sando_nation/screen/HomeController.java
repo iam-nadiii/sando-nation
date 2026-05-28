@@ -1,7 +1,12 @@
 package com.sando_nation.screen;
 
+import com.sando_nation.model.Order;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
+
 
 public class HomeController {
 
@@ -13,11 +18,27 @@ public class HomeController {
 
     @FXML
     private void handleNewOrder() {
-        System.out.println("New order clicked"); // wire up later
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/sando_nation/order.fxml"));
+            Stage stage = (Stage) newOrderButton.getScene().getWindow();
+            stage.setScene(new Scene(loader.load(), 600, 400));
+
+            int orderNumber = (int)(Math.random() * 9000) + 1000;
+
+            OrderController controller = loader.getController();
+            controller.initOrder(new Order(orderNumber));
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void handleExit() {
         System.exit(0);
     }
+
+
 }

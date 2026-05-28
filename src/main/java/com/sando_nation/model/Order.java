@@ -23,6 +23,8 @@ public class Order {
         }
     }
 
+    public int getOrderNumber() { return orderNumber; }
+
     public List<PricedItem> getItems() { return items; }
 
 

@@ -1,6 +1,6 @@
 package com.sando_nation.model;
 
-public class Sauce extends Topping {
+public class Sauce extends MenuItem{
 
         public Sauce(String name) {
             super(name);

@@ -35,7 +35,7 @@ public class UserInterface {
                 default  -> System.out.println("  Invalid input.");
             }
         }
-        System.out.println("  Goodbye!");
+        slowPrint("  Goodbye!");
     }
 
     public void runOrderScreen() {
@@ -61,25 +61,25 @@ public class UserInterface {
                     Sandwich sandwich = buildSandwich();
                     order.addItem(sandwich);
                     System.out.println("\n  Sandwich added!");
-                    System.out.println(sandwich);
+                    slowPrint(sandwich.toString());
                 }
                 case "2" ->{
                     Drink drink = buildDrink();
                     order.addItem(drink);
                     System.out.println("\n  Drink added!");
-                    System.out.println(drink);
+                    slowPrint(drink.toString());
                 }
                 case "3" ->{
                     Chips chips = buildChips();
                     order.addItem(chips);
                     System.out.println("\n Chips added!");
-                    System.out.println(chips);
+                    slowPrint(chips.toString());
                 }
                 case "4" -> {
                     SignatureSandwich signature = selectSignatureSandwich();
                     order.addItem(signature);
                     System.out.println("\n  Signature sandwich added!");
-                    System.out.println(signature);
+                    slowPrint(signature.toString());
                 }
                 case "5" -> {
                     checkout(order);
@@ -87,7 +87,7 @@ public class UserInterface {
                 }
 
                 case "0" -> {
-                    System.out.println("  Order cancelled.");
+                    slowPrint("  Order cancelled.");
                     inOrder = false;
                 }
                 default -> System.out.println("  Invalid input.");
@@ -151,9 +151,6 @@ public class UserInterface {
             if (customizing) System.out.println(sandwich);
         }
     }
-
-
-
 
     private Chips buildChips() {
         displayOptions("Select a brand of chips:", menu.getChips());
@@ -233,7 +230,7 @@ public class UserInterface {
             if (choice == -1) break;
             RegularTopping topping = sandwich.getRegularToppings().get(choice);
             sandwich.removeTopping(topping);
-            System.out.println("  Removed: " + topping.getName());
+            slowPrint("  Removed: " + topping.getName());
         }
     }
 
@@ -245,7 +242,7 @@ public class UserInterface {
             if (choice == -1) break;
             Sauce sauce = sandwich.getSauces().get(choice);
             sandwich.removeSauce(sauce);
-            System.out.println("  Removed: " + sauce.getName());
+            slowPrint("  Removed: " + sauce.getName());
         }
     }
 
@@ -264,7 +261,7 @@ public class UserInterface {
         int choice = promptMenuSelection(available.size());
         if (choice >= 0) {
             sandwich.addTopping(available.get(choice));
-            System.out.println("  Added: " + available.get(choice).getName());
+            slowPrint("  Added: " + available.get(choice).getName());
         }
     }
 
@@ -282,7 +279,7 @@ public class UserInterface {
         int choice = promptMenuSelection(available.size());
         if (choice >= 0) {
             sandwich.addSauce(available.get(choice));
-            System.out.println("  Added: " + available.get(choice).getName());
+            slowPrint("  Added: " + available.get(choice).getName());
         }
     }
 
@@ -353,7 +350,7 @@ public class UserInterface {
             // map reversed index back to original list index
             int actualIndex = order.getItems().size() - 1 - choice;
             order.removeItem(actualIndex);
-            System.out.println("  Item removed.");
+            slowPrint("  Item removed.");
         }
     }
 
@@ -382,8 +379,6 @@ public class UserInterface {
         System.out.print("  Do you want extra " + topping + "? (y/n): ");
         return scanner.nextLine().trim().equalsIgnoreCase("y");
     }
-
-
 
     private void slowPrint(String message) {
 

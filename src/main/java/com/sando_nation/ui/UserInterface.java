@@ -171,7 +171,6 @@ public class UserInterface {
             case 0 -> selected.setSize("small");
             case 1 -> selected.setSize("medium");
             case 2 -> selected.setSize("large");
-            default -> System.out.println("Invalid input. Please select a number between 1-3.");
         }
 
         return selected;
@@ -193,13 +192,13 @@ public class UserInterface {
         // meat
         displayOptions("Select your meat:", menu.getMeats());
         Meat meat = menu.getMeats().get(promptMenuSelection(menu.getMeats().size()));
-        meat.setWantsExtra(getUserWantsExtra(meat.getName()));
+        meat.setWantsExtra(askWantsExtra(meat.getName()));
         sandwich.setMeat(meat);
 
         // cheese
         displayOptions("Select your cheese:", menu.getCheeses());
         Cheese cheese = menu.getCheeses().get(promptMenuSelection(menu.getCheeses().size()));
-        cheese.setWantsExtra(getUserWantsExtra(cheese.getName()));
+        cheese.setWantsExtra(askWantsExtra(cheese.getName()));
         sandwich.setCheese(cheese);
 
         // initialize sandwich with all toppings first
@@ -323,7 +322,7 @@ public class UserInterface {
                     if(success) {
                         slowPrint("  Order confirmed! Thank you for choosing Sando-Nation!");
                     } else {
-                    slowPrint("  Something went wrong generating your receipt. Please see staff.");
+                        slowPrint("  Something went wrong generating your receipt. Please see staff.");
                     }
 
                     checkingOut = false;
@@ -374,7 +373,7 @@ public class UserInterface {
         }
     }
 
-    private boolean getUserWantsExtra(String topping) {
+    private boolean askWantsExtra(String topping) {
         System.out.print("  Do you want extra " + topping + "? (y/n): ");
         return scanner.nextLine().trim().equalsIgnoreCase("y");
     }

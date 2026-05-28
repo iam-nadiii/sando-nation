@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class UserInterface {
@@ -97,7 +98,7 @@ public class UserInterface {
         SignatureSandwich selected = menu.getSignatureSandwiches()
                 .get(chooseAMenuItem(menu.getSignatureSandwiches().size()));
 
-        // make a copy using the existing constructor and setters
+        // make a copy
         SignatureSandwich copy = new SignatureSandwich(
                 selected.getSignatureName(),
                 selected.getBread(),
@@ -109,22 +110,43 @@ public class UserInterface {
         copy.initializeToppings(new ArrayList<>(selected.getRegularToppings()));
         copy.initializeSauces(new ArrayList<>(selected.getSauces()));
 
-        // optionally customize
-        System.out.print("  Would you like to customize it? (y/n): ");
-        if (scanner.nextLine().trim().equalsIgnoreCase("y")) {
-            runRemoveToppingScreen(copy);
-            runAddToppingScreen(copy);
-            
-            runRemoveSauceScreen(copy);
-            runAddSauceScreen(copy);
+        // show what it comes with
+        System.out.println(copy);
 
+        System.out.print("  Would you like to customize it? (y/n): ");
+        if (!scanner.nextLine().trim().equalsIgnoreCase("y")) {
+            return copy;
+        }
+
+        // customization loop
+        boolean customizing = true;
+        while (customizing) {
+            System.out.print("""
+            \n  Customize your sandwich:
+              1) Remove a topping
+              2) Add a topping
+              3) Remove a sauce
+              4) Add a sauce
+              0) Done
+            Enter command: \s""");
+
+            switch (scanner.nextLine().trim()) {
+                case "1" -> runRemoveToppingScreen(copy);
+                case "2" -> runAddToppingScreen(copy);
+                case "3" -> runRemoveSauceScreen(copy);
+                case "4" -> runAddSauceScreen(copy);
+                case "0" -> customizing = false;
+                default  -> System.out.println("  Invalid input.");
+            }
+
+            // show updated sandwich after each change
+            if (customizing) System.out.println(copy);
         }
 
         return copy;
     }
 
-    private void runAddToppingScreen(SignatureSandwich copy) {
-    }
+
 
 
     private Chips buildChips() {
@@ -231,6 +253,42 @@ public class UserInterface {
         }
     }
 
+    private void runAddToppingScreen(Sandwich sandwich) {
+        // only show toppings not already on the sandwich
+        List<RegularTopping> available = menu.getToppings().stream()
+                .filter(t -> !sandwich.getRegularToppings().contains(t))
+                .collect(Collectors.toList());
+
+        if (available.isEmpty()) {
+            System.out.println("  All toppings already added.");
+            return;
+        }
+
+        displayOptions("Select a topping to add:", available);
+        int choice = chooseAMenuItem(available.size());
+        if (choice >= 0) {
+            sandwich.addTopping(available.get(choice));
+            System.out.println("  Added: " + available.get(choice).getName());
+        }
+    }
+
+    private void runAddSauceScreen(Sandwich sandwich) {
+        List<Sauce> available = menu.getSauces().stream()
+                .filter(s -> !sandwich.getSauces().contains(s))
+                .collect(Collectors.toList());
+
+        if (available.isEmpty()) {
+            System.out.println("  All sauces already added.");
+            return;
+        }
+
+        displayOptions("Select a sauce to add:", available);
+        int choice = chooseAMenuItem(available.size());
+        if (choice >= 0) {
+            sandwich.addSauce(available.get(choice));
+            System.out.println("  Added: " + available.get(choice).getName());
+        }
+    }
 
     private void checkout(Order order) {
 

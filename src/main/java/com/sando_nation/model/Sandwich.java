@@ -64,6 +64,14 @@ public class Sandwich implements PricedItem {
         sauces.remove(sauce);
     }
 
+    public void addTopping(RegularTopping topping) {
+        regularToppings.add(topping);
+    }
+
+    public void addSauce(Sauce sauce) {
+        sauces.add(sauce);
+    }
+
     @Override
     public String getName() { return "Sandwich"; }
 

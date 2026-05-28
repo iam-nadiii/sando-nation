@@ -11,10 +11,17 @@ public class Sandwich implements PricedItem {
     private List<RegularTopping> regularToppings;
     private boolean             isToasted;
     private List<Sauce> sauces;
+    private List<Side> sides;
+
+
 
     public Sandwich() {
         this.regularToppings = new ArrayList<>();
-        this.sauces = new ArrayList<>();
+        this.sauces          = new ArrayList<>();
+        this.sides           = new ArrayList<>();
+        // all sandwiches come with au jus and sauce
+        this.sides.add(new Side("Au Jus"));
+        this.sides.add(new Side("Sauce"));
     }
 
     public SandwichSize getSandwichSize()               { return sandwichSize; }
@@ -27,6 +34,7 @@ public class Sandwich implements PricedItem {
     public List<Sauce> getSauces() {
         return sauces;
     }
+    public List<Side> getSides() { return sides; }
 
     public void setSandwichSize(SandwichSize size) {
         this.sandwichSize = size;
@@ -108,6 +116,10 @@ public class Sandwich implements PricedItem {
             sauces.forEach(t -> sb.append("    + ").append(t.getName()).append("\n"));
         }
         sb.append("  Toasted: ").append(isToasted ? "Yes" : "No").append("\n");
+        if (!sides.isEmpty()) {
+            sb.append("  Sides:\n");
+            sides.forEach(s -> sb.append("    + ").append(s.getName()).append(" (included)\n"));
+        }
         sb.append(String.format("  Subtotal: $%.2f", getPrice())).append("\n");
         return sb.toString();
     }

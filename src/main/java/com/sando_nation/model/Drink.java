@@ -59,8 +59,8 @@ public class Drink extends MenuItem{
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n  --- Drink ---\n");
-        sb.append("  Flavor : ").append(getName()  != null ? getName()  : "none").append("\n");
-        sb.append("  Size   : ").append(getSize()  != null ? getSize()  : "none").append("\n");
+        sb.append("  Flavor : ").append(getName()).append("\n");
+        sb.append("  Size   : ").append(getSize() != null ? getSize() : "none").append("\n");
         sb.append(String.format("  Subtotal: $%.2f", getPrice())).append("\n");
         return sb.toString();
     }

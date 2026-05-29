@@ -22,52 +22,67 @@ public class OrderBuilder {
 
     public Sandwich buildSandwich() {
         Sandwich sandwich = new Sandwich();
+        selectSize(sandwich);
+        selectBread(sandwich);
+        selectMeat(sandwich);
+        selectCheese(sandwich);
+        selectToppings(sandwich);
+        selectSauces(sandwich);
+        selectSides(sandwich);
+        selectToasted(sandwich);
+        return sandwich;
+    }
 
-        // size
+    private void selectSize(Sandwich sandwich) {
         display.displayOptions("Select a size:", menu.getSizes());
         SandwichSize size = menu.getSizes().get(display.promptMenuSelection(menu.getSizes().size()));
         sandwich.setSandwichSize(size);
         slowPrint(sandwich.toString());
+    }
 
-        // bread
+    private void selectBread(Sandwich sandwich) {
         display.displayOptions("Select your bread:", menu.getBreads());
         Bread bread = menu.getBreads().get(display.promptMenuSelection(menu.getBreads().size()));
         sandwich.setBread(bread);
         slowPrint(sandwich.toString());
+    }
 
-        // meat
+    private void selectMeat(Sandwich sandwich) {
         display.displayOptions("Select your meat:", menu.getMeats());
         Meat meat = menu.getMeats().get(display.promptMenuSelection(menu.getMeats().size()));
         meat.setWantsExtra(display.askYesNo("Do you want extra " + meat.getName() + "?"));
         sandwich.setMeat(meat);
         slowPrint(sandwich.toString());
+    }
 
-        // cheese
+    private void selectCheese(Sandwich sandwich) {
         display.displayOptions("Select your cheese:", menu.getCheeses());
         Cheese cheese = menu.getCheeses().get(display.promptMenuSelection(menu.getCheeses().size()));
         cheese.setWantsExtra(display.askYesNo("Do you want extra " + cheese.getName() + "?"));
         sandwich.setCheese(cheese);
         slowPrint(sandwich.toString());
+    }
 
-        // toppings
+    private void selectToppings(Sandwich sandwich) {
         sandwich.initializeToppings(menu.getToppings());
         toppingScreen.runRemoveToppingScreen(sandwich);
         slowPrint(sandwich.toString());
+    }
 
-        // sauces
+    private void selectSauces(Sandwich sandwich) {
         sandwich.initializeSauces(menu.getSauces());
         toppingScreen.runRemoveSauceScreen(sandwich);
         slowPrint(sandwich.toString());
+    }
 
-        // sides
+    private void selectSides(Sandwich sandwich) {
         toppingScreen.runRemoveSideScreen(sandwich);
         slowPrint(sandwich.toString());
+    }
 
-        // toasted
+    private void selectToasted(Sandwich sandwich) {
         sandwich.setToasted(display.askYesNo("Would you like it toasted?"));
         slowPrint(sandwich.toString());
-
-        return sandwich;
     }
 
     public Drink buildDrink() {
@@ -96,7 +111,7 @@ public class OrderBuilder {
         return menu.getChips().get(display.promptMenuSelection(menu.getChips().size()));
     }
 
-    public SignatureSandwich selectSignatureSandwich() {
+    public SignatureSandwich buildSignatureSandwich() {
         display.displayOptions("Select a signature sandwich:", menu.getSignatureSandwiches());
         SignatureSandwich selected = menu.getSignatureSandwiches()
                 .get(display.promptMenuSelection(menu.getSignatureSandwiches().size()));

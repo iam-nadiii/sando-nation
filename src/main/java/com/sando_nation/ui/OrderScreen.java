@@ -1,12 +1,16 @@
 package com.sando_nation.ui;
 
-import com.sando_nation.model.*;
+import com.sando_nation.model.Menu;
+import com.sando_nation.model.Order;
+import com.sando_nation.model.PricedItem;
 
 import java.util.Scanner;
 
+import static com.sando_nation.ui.UserInterface.generateOrderNumber;
+
 public class OrderScreen {
     private final Scanner         scanner;
-    private final Menu            menu;
+    private final Menu menu;
     private final DisplayHelper   display;
     private final OrderBuilder builder;
     private final CheckoutScreen  checkoutScreen;
@@ -19,8 +23,9 @@ public class OrderScreen {
         this.checkoutScreen = new CheckoutScreen(scanner, display);
     }
 
-    public void run() {
-        Order   order   = new Order(UserInterface.generateOrderNumber());
+
+    public void runOrderScreen() {
+        Order   order   = new Order(generateOrderNumber());
         boolean inOrder = true;
 
         while (inOrder) {
@@ -41,17 +46,17 @@ public class OrderScreen {
                 case "1" -> addItem(order, builder.buildSandwich(),             "Sandwich");
                 case "2" -> addItem(order, builder.buildDrink(),                "Drink");
                 case "3" -> addItem(order, builder.buildChips(),                "Chips");
-                case "4" -> addItem(order, builder.selectSignatureSandwich(),   "Signature sandwich");
-                case "5" -> { checkoutScreen.run(order); inOrder = false; }
+                case "4" -> addItem(order, builder.buildSignatureSandwich(),   "Signature sandwich");
+                case "5" -> { checkoutScreen.runCheckoutScreen(order); inOrder = false; }
                 case "0" -> { DisplayHelper.slowPrint("  Order cancelled."); inOrder = false; }
                 default  -> System.out.println("  Invalid input.");
             }
         }
     }
 
-    private void addItem(Order order, PricedItem item, String label) {
+    private void addItem(Order order, PricedItem item, String itemType) {
         order.addItem(item);
-        DisplayHelper.slowPrint("\n  " + label + " added!");
+        DisplayHelper.slowPrint("\n  " + itemType + " added!");
         System.out.println(item);
     }
 }

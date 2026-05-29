@@ -11,32 +11,38 @@ public class HomeScreen {
 
     private static final int WIDTH = 84;
 
+    private static final int TOPPINGS_PER_ROW = 5;
+    private static final int SAUCES_PER_ROW   = 4;
+
     public HomeScreen(Scanner scanner, Menu menu) {
         this.scanner     = scanner;
         this.menu        = menu;
         this.orderScreen = new OrderScreen(scanner, menu);
     }
 
-    public void run() {
-        printMenu();  // ← print once at the start
+    public void runHomeScreen() {
+        printMenu();
         boolean isRunning = true;
         while (isRunning) {
-            System.out.print(
-                    box('╔', '═', '╗') + "\n" +
-                            "║" + center("", WIDTH) + "║\n" +
-                            "║" + center("1) New Order                          0) Exit Application", WIDTH) + "║\n" +
-                            "║" + center("", WIDTH) + "║\n" +
-                            box('╚', '═', '╝') + "\n" +
-                            "Enter command: "
-            );
-
+            printCommandPrompt();
             switch (scanner.nextLine().trim()) {
-                case "1" -> orderScreen.run();
+                case "1" -> orderScreen.runOrderScreen();
                 case "0" -> isRunning = false;
                 default  -> System.out.println("  Invalid input.");
             }
         }
         DisplayHelper.slowPrint("  Goodbye!");
+    }
+
+    private void printCommandPrompt() {
+        System.out.print(
+                box('╔', '═', '╗') + "\n" +
+                        "║" + center("", WIDTH) + "║\n" +
+                        "║" + center("1) New Order                          0) Exit Application", WIDTH) + "║\n" +
+                        "║" + center("", WIDTH) + "║\n" +
+                        box('╚', '═', '╝') + "\n" +
+                        "Enter command: "
+        );
     }
 
     private void printMenu() {
@@ -164,7 +170,7 @@ public class HomeScreen {
         StringBuilder sb = new StringBuilder("  ");
         for (int i = 0; i < menu.getToppings().size(); i++) {
             sb.append(String.format("%-15s", menu.getToppings().get(i).getName()));
-            if ((i + 1) % 5 == 0) sb.append("\n  ");
+            if ((i + 1) % TOPPINGS_PER_ROW == 0) sb.append("\n  ");
         }
         System.out.println(sb);
     }
@@ -177,7 +183,7 @@ public class HomeScreen {
         StringBuilder sb = new StringBuilder("  ");
         for (int i = 0; i < menu.getSauces().size(); i++) {
             sb.append(String.format("%-20s", menu.getSauces().get(i).getName()));
-            if ((i + 1) % 4 == 0) sb.append("\n  ");
+            if ((i + 1) % SAUCES_PER_ROW == 0) sb.append("\n  ");
         }
         System.out.println(sb);
     }
@@ -215,7 +221,7 @@ public class HomeScreen {
 
     private void printChips() {
         System.out.println();
-        System.out.printf("  %-60s %s%n", "CHIPS", "$1.50");
+        System.out.printf("  %-60s $%.2f%n", "CHIPS", menu.getChips().get(0).getPrice());
         System.out.println(divider());
 
         StringBuilder sb = new StringBuilder("  ");
@@ -226,38 +232,40 @@ public class HomeScreen {
     private void printSignatureSandwiches() {
         System.out.println();
         System.out.println(section("SIGNATURE SANDWICHES"));
+        menu.getSignatureSandwiches().forEach(this::printSignatureSandwich);
+        System.out.println();
+    }
 
-        menu.getSignatureSandwiches().forEach(s -> {
-            double minPrice = s.getMeat().calculatePrice("4 inch",  false)
-                    + s.getCheese().calculatePrice("4 inch",  false)
-                    + menu.getSizes().get(0).getPrice();
-            double maxPrice = s.getMeat().calculatePrice("12 inch", false)
-                    + s.getCheese().calculatePrice("12 inch", false)
-                    + menu.getSizes().get(2).getPrice();
+    private void printSignatureSandwich(SignatureSandwich s) {
+        SandwichSize smallest = menu.getSizes().get(0);
+        SandwichSize largest  = menu.getSizes().get(menu.getSizes().size() - 1);
 
-            System.out.println();
-            System.out.printf("  %-55s from $%.2f - $%.2f%n",
-                    s.getSignatureName(), minPrice, maxPrice);
-            System.out.println(divider());
-            System.out.printf("    Bread   : %s%n", s.getBread().getName());
-            System.out.printf("    Meat    : %s%n", s.getMeat().getName());
-            System.out.printf("    Cheese  : %s%n", s.getCheese().getName());
+        double minPrice = s.getMeat().calculatePrice(smallest.getSize(), false)
+                + s.getCheese().calculatePrice(smallest.getSize(), false)
+                + smallest.getPrice();
+        double maxPrice = s.getMeat().calculatePrice(largest.getSize(), false)
+                + s.getCheese().calculatePrice(largest.getSize(), false)
+                + largest.getPrice();
 
-            String toppings = s.getRegularToppings().stream()
-                    .map(RegularTopping::getName)
-                    .reduce((a, b) -> a + ", " + b)
-                    .orElse("None");
-            System.out.printf("    Toppings: %s%n", toppings);
+        String toppings = s.getRegularToppings().stream()
+                .map(RegularTopping::getName)
+                .reduce((a, b) -> a + ", " + b)
+                .orElse("None");
 
-            String sauces = s.getSauces().stream()
-                    .map(Sauce::getName)
-                    .reduce((a, b) -> a + ", " + b)
-                    .orElse("None");
-            System.out.printf("    Sauce   : %s%n", sauces);
-            System.out.printf("    Toasted : %s%n", s.isToasted() ? "Yes" : "No");
-            System.out.println("    Customize to your liking — add or remove any topping or sauce");
-        });
+        String sauces = s.getSauces().stream()
+                .map(Sauce::getName)
+                .reduce((a, b) -> a + ", " + b)
+                .orElse("None");
 
         System.out.println();
+        System.out.printf("  %-55s from $%.2f - $%.2f%n", s.getSignatureName(), minPrice, maxPrice);
+        System.out.println(divider());
+        System.out.printf("    Bread   : %s%n", s.getBread().getName());
+        System.out.printf("    Meat    : %s%n", s.getMeat().getName());
+        System.out.printf("    Cheese  : %s%n", s.getCheese().getName());
+        System.out.printf("    Toppings: %s%n", toppings);
+        System.out.printf("    Sauce   : %s%n", sauces);
+        System.out.printf("    Toasted : %s%n", s.isToasted() ? "Yes" : "No");
+        System.out.println("    Customize to your liking — add or remove any topping or sauce");
     }
 }

@@ -2,7 +2,9 @@ package com.sando_nation.ui;
 
 import com.sando_nation.model.Receipt;
 import com.sando_nation.data.ReceiptFileHandler;
-import com.sando_nation.model.*;
+
+import com.sando_nation.model.Order;
+import com.sando_nation.model.PricedItem;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,14 +15,14 @@ import java.util.Scanner;
 public class CheckoutScreen {
     private final Scanner            scanner;
     private final DisplayHelper      display;
-    private final ReceiptFileHandler receiptHandler = new ReceiptFileHandler();
+
 
     public CheckoutScreen(Scanner scanner, DisplayHelper display) {
         this.scanner = scanner;
         this.display = display;
     }
 
-    public void run(Order order) {
+    public void runCheckoutScreen(Order order) {
         if (order.getItems().isEmpty()) {
             DisplayHelper.slowPrint("  Your order is empty. Please add items before checking out.");
             return;
@@ -51,7 +53,7 @@ public class CheckoutScreen {
     private void confirmOrder(Order order) {
         DisplayHelper.slowPrint("  Processing order...");
         Receipt receipt = new Receipt(LocalDateTime.now(), order);
-        boolean success = receiptHandler.generateReceipt(receipt);
+        boolean success = ReceiptFileHandler.generateReceipt(receipt);
         DisplayHelper.slowPrint(success
                 ? "  Order confirmed! Thank you for choosing Sando-Nation!"
                 : "  Something went wrong. Please see staff.");

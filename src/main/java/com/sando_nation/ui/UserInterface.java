@@ -11,8 +11,7 @@ public class UserInterface {
     public static int generateOrderNumber() {
         return (int) (Math.random() * 9000) + 1000;
     }
-
     public void runHomeScreen() {
-        new HomeScreen(scanner, menu).run();
+        new HomeScreen(scanner, menu).runHomeScreen();
     }
 }

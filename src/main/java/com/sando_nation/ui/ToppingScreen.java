@@ -83,7 +83,7 @@ public class ToppingScreen {
         System.out.println("\n  Your sandwich comes with the following sides:");
         sandwich.getSides().forEach(s -> System.out.println("    + " + s.getName() + " (included)"));
 
-        while (true) {
+        while (!sandwich.getSides().isEmpty()) {
             display.displayOptions("Select a side to remove (0 when done):", sandwich.getSides());
             System.out.println("  0. Done");
             int choice = display.promptMenuSelection(sandwich.getSides().size());
@@ -91,12 +91,10 @@ public class ToppingScreen {
             Side side = sandwich.getSides().get(choice);
             sandwich.removeSide(side);
             DisplayHelper.slowPrint("  Removed: " + side.getName());
-
-            if (sandwich.getSides().isEmpty()) {
-                System.out.println("  No sides remaining.");
-                break;
-            }
         }
+
+        if (sandwich.getSides().isEmpty())
+            System.out.println("  No sides remaining.");
     }
 
     public void runCustomizeSignatureSandwichScreen(SignatureSandwich sandwich) {

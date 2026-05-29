@@ -9,9 +9,6 @@ public class SandwichSize extends MenuItem {
 
     }
 
-
-
-
     @Override
     public String getDescription() { return getSize(); }
 }

@@ -11,6 +11,7 @@ public class Menu {
     private List<Cheese> cheeses;
     private List<Drink> drinks;
     private List<Chips> chips;
+    private List<Side> sides;
     private List<SignatureSandwich> signatureSandwiches;
     private List<Side> sides;
 
@@ -155,6 +156,7 @@ public class Menu {
     public List<Side> getSides() { return sides; }
     public List<Drink> getDrinks() { return drinks; }
     public List<Chips> getChips() { return chips;}
+    public List<Side> getSides() { return sides; }
     public List<SignatureSandwich> getSignatureSandwiches(){return signatureSandwiches;}
 
 }

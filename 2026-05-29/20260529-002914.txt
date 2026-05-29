@@ -1,0 +1,44 @@
+
+=============================
+  Order #3587
+=============================
+
+  --- Drink ---
+  Flavor : Coke
+  Size   : large
+  Subtotal: $3.00
+
+
+  --- Sandwich ---
+  Size   : 4 inch
+  Bread  : Rye
+  Meat   : Ham (extra)
+  Cheese : Swiss (extra)
+  Toppings:
+    + Lettuce
+    + Peppers
+    + Onions
+    + Tomatoes
+    + Jalapenos
+    + Cucumbers
+    + Pickles
+    + Guacamole
+    + Mushrooms
+  Sauces:
+    + Mayo
+    + Mustard
+    + Ketchup
+    + Ranch
+    + Thousand islands
+    + Vinaigrette
+  Sides:
+    + Au Jus (included)
+    + Sauce (included)
+  Toasted: Yes
+  Subtotal: $8.05
+
+─────────────────────────────
+  Order Total: $11.05
+=============================
+2026-05-29
+00:29:14

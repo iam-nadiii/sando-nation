@@ -1,6 +1,6 @@
 package com.sando_nation.ui;
 
-import com.sando_nation.data.Receipt;
+import com.sando_nation.model.Receipt;
 import com.sando_nation.data.ReceiptFileHandler;
 import com.sando_nation.model.*;
 
@@ -35,11 +35,14 @@ public class UserInterface {
                 default  -> System.out.println("  Invalid input.");
             }
         }
-        System.out.println("  Goodbye!");
+        slowPrint("  Goodbye!");
     }
 
+    public static int generateOrderNumber(){
+        return (int)(Math.random() * 9000) + 1000;
+    }
     public void runOrderScreen() {
-        Order   order     = new Order((int)(Math.random() * 9000) + 1000);
+        Order   order     = new Order(generateOrderNumber());
         boolean inOrder   = true;
 
         while (inOrder) {
@@ -61,25 +64,25 @@ public class UserInterface {
                     Sandwich sandwich = buildSandwich();
                     order.addItem(sandwich);
                     System.out.println("\n  Sandwich added!");
-                    System.out.println(sandwich);
+                    slowPrint(sandwich.toString());
                 }
                 case "2" ->{
                     Drink drink = buildDrink();
                     order.addItem(drink);
                     System.out.println("\n  Drink added!");
-                    System.out.println(drink);
+                    slowPrint(drink.toString());
                 }
                 case "3" ->{
                     Chips chips = buildChips();
                     order.addItem(chips);
-                    System.out.println("\n Chips added!");
-                    System.out.println(chips);
+                    System.out.println("\n  Chips added!");
+                    slowPrint(chips.toString());
                 }
                 case "4" -> {
                     SignatureSandwich signature = selectSignatureSandwich();
                     order.addItem(signature);
                     System.out.println("\n  Signature sandwich added!");
-                    System.out.println(signature);
+                    slowPrint(signature.toString());
                 }
                 case "5" -> {
                     checkout(order);
@@ -87,7 +90,7 @@ public class UserInterface {
                 }
 
                 case "0" -> {
-                    System.out.println("  Order cancelled.");
+                    slowPrint("  Order cancelled.");
                     inOrder = false;
                 }
                 default -> System.out.println("  Invalid input.");
@@ -152,20 +155,19 @@ public class UserInterface {
         }
     }
 
-
-
-
     private Chips buildChips() {
         displayOptions("Select a brand of chips:", menu.getChips());
-        Chips selected = menu.getChips().get(promptMenuSelection(menu.getChips().size()));
-        return selected;
+        return menu.getChips().get(promptMenuSelection(menu.getChips().size()));
     }
 
     private Drink buildDrink() {
 
         // pick the drink flavor
         displayOptions("Select a drink:", menu.getDrinks());
-        Drink selected = menu.getDrinks().get(promptMenuSelection(menu.getDrinks().size()));
+        Drink template = menu.getDrinks().get(promptMenuSelection(menu.getDrinks().size()));
+        Drink selected = new Drink(template.getName(), template.getPriceSmall(),
+                template.getPriceMedium(), template.getPriceLarge());
+        selected.setSize("small");
 
         // pick the size
         System.out.println("\n  Select a size:");
@@ -233,7 +235,7 @@ public class UserInterface {
             if (choice == -1) break;
             RegularTopping topping = sandwich.getRegularToppings().get(choice);
             sandwich.removeTopping(topping);
-            System.out.println("  Removed: " + topping.getName());
+            slowPrint("  Removed: " + topping.getName());
         }
     }
 
@@ -245,7 +247,7 @@ public class UserInterface {
             if (choice == -1) break;
             Sauce sauce = sandwich.getSauces().get(choice);
             sandwich.removeSauce(sauce);
-            System.out.println("  Removed: " + sauce.getName());
+            slowPrint("  Removed: " + sauce.getName());
         }
     }
 
@@ -264,7 +266,7 @@ public class UserInterface {
         int choice = promptMenuSelection(available.size());
         if (choice >= 0) {
             sandwich.addTopping(available.get(choice));
-            System.out.println("  Added: " + available.get(choice).getName());
+            slowPrint("  Added: " + available.get(choice).getName());
         }
     }
 
@@ -282,12 +284,13 @@ public class UserInterface {
         int choice = promptMenuSelection(available.size());
         if (choice >= 0) {
             sandwich.addSauce(available.get(choice));
-            System.out.println("  Added: " + available.get(choice).getName());
+            slowPrint("  Added: " + available.get(choice).getName());
         }
     }
 
     private void checkout(Order order) {
 
+        ReceiptFileHandler receiptFileHandler = new ReceiptFileHandler();
         boolean checkingOut = true;
 
         while (checkingOut) {
@@ -314,7 +317,7 @@ public class UserInterface {
 
                     slowPrint("  Processing order...");
 
-                    ReceiptFileHandler receiptFileHandler = new ReceiptFileHandler();
+
                     Receipt receipt = new Receipt(LocalDateTime.now(), order);
 
                     boolean success = receiptFileHandler.generateReceipt(receipt);
@@ -353,7 +356,7 @@ public class UserInterface {
             // map reversed index back to original list index
             int actualIndex = order.getItems().size() - 1 - choice;
             order.removeItem(actualIndex);
-            System.out.println("  Item removed.");
+            slowPrint("  Item removed.");
         }
     }
 
@@ -370,6 +373,7 @@ public class UserInterface {
             try {
                 int choice = Integer.parseInt(scanner.nextLine().trim());
                 if (choice == 0) return -1;
+//                used -1 so that promptMenuSelection() can be used for arrays and lists as well
                 if (choice >= 1 && choice <= max) return choice - 1;
                 System.out.println("  Please enter a number between 1 and " + max + ".");
             } catch (NumberFormatException e) {
@@ -383,9 +387,7 @@ public class UserInterface {
         return scanner.nextLine().trim().equalsIgnoreCase("y");
     }
 
-
-
-    private void slowPrint(String message) {
+    private static void slowPrint(String message) {
 
         try {
             Thread.sleep(DELAY);

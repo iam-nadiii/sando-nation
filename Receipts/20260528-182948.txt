@@ -1,0 +1,34 @@
+
+=============================
+  Order #4391
+=============================
+
+  --- Sandwich ---
+  Size   : 4 inch
+  Bread  : Wheat
+  Meat   : Bacon (extra)
+  Cheese : Cheddar (extra)
+  Toppings:
+    + Lettuce
+    + Peppers
+    + Onions
+    + Tomatoes
+    + Jalapenos
+    + Cucumbers
+    + Pickles
+    + Guacamole
+  Sauces:
+    + Mayo
+    + Mustard
+    + Ketchup
+    + Ranch
+    + Thousand islands
+    + Vinaigrette
+  Toasted: No
+  Subtotal: $8.05
+
+─────────────────────────────
+  Order Total: $8.05
+=============================
+2026-05-28
+18:29:48

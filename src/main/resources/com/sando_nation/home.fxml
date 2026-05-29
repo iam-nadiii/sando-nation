@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="20"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.sando_nation.screen.HomeController">
+
+    <Label text="Welcome to Sando-Nation!!"
+           style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <Button fx:id="newOrderButton"
+            text="New Order"
+            onAction="#handleNewOrder"
+            prefWidth="200"/>
+
+    <Button fx:id="exitButton"
+            text="Exit"
+            onAction="#handleExit"
+            prefWidth="200"/>
+</VBox>

@@ -58,6 +58,20 @@ Regular toppings, sauces, and sides are included at no extra charge.
 
 ---
 
+## Screenshots
+
+**Home Screen — Menu**
+
+![Menu Top](images/Menu Top.png)
+
+![Menu Bottom](images/Menu bottom.png)
+
+**Checkout**
+
+![Checkout](images/checkout.png)
+
+---
+
 ## Technologies
 
 - Java 17

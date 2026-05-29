@@ -101,27 +101,41 @@ public class Sandwich implements PricedItem {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n  --- Sandwich ---\n");
-        sb.append("  Size   : ").append(sandwichSize != null ? sandwichSize.getDescription() : "none").append("\n");
-        sb.append("  Bread  : ").append(bread  != null ? bread.getName()  : "none").append("\n");
-        sb.append("  Meat   : ").append(meat   != null ? meat.getName()   : "none");
-        if (meat != null) sb.append(meat.isWantsExtra() ? " (extra)" : "");
-        sb.append("\n");
-        sb.append("  Cheese : ").append(cheese != null ? cheese.getName() : "none");
-        if (cheese != null) sb.append(cheese.isWantsExtra() ? " (extra)" : "");
-        sb.append("\n");
+
+        if (sandwichSize != null)
+            sb.append("  Size   : ").append(sandwichSize.getDescription()).append("\n");
+
+        if (bread != null)
+            sb.append("  Bread  : ").append(bread.getName()).append("\n");
+
+        if (meat != null) {
+            sb.append("  Meat   : ").append(meat.getName());
+            sb.append(meat.isWantsExtra() ? " (extra)" : "").append("\n");
+        }
+
+        if (cheese != null) {
+            sb.append("  Cheese : ").append(cheese.getName());
+            sb.append(cheese.isWantsExtra() ? " (extra)" : "").append("\n");
+        }
+
         if (!regularToppings.isEmpty()) {
             sb.append("  Toppings:\n");
             regularToppings.forEach(t -> sb.append("    + ").append(t.getName()).append("\n"));
         }
+
         if (!sauces.isEmpty()) {
             sb.append("  Sauces:\n");
-            sauces.forEach(t -> sb.append("    + ").append(t.getName()).append("\n"));
+            sauces.forEach(s -> sb.append("    + ").append(s.getName()).append("\n"));
         }
+
         if (!sides.isEmpty()) {
             sb.append("  Sides:\n");
             sides.forEach(s -> sb.append("    + ").append(s.getName()).append(" (included)\n"));
         }
-        sb.append("  Toasted: ").append(isToasted ? "Yes" : "No").append("\n");
+
+        if (isToasted)
+            sb.append("  Toasted: Yes\n");
+
         sb.append(String.format("  Subtotal: $%.2f", getPrice())).append("\n");
         return sb.toString();
     }

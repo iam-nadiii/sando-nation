@@ -5,6 +5,8 @@ import com.sando_nation.model.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static com.sando_nation.ui.DisplayHelper.slowPrint;
+
 public class OrderBuilder {
     private final Scanner       scanner;
     private final Menu          menu;
@@ -21,35 +23,49 @@ public class OrderBuilder {
     public Sandwich buildSandwich() {
         Sandwich sandwich = new Sandwich();
 
+        // size
         display.displayOptions("Select a size:", menu.getSizes());
         SandwichSize size = menu.getSizes().get(display.promptMenuSelection(menu.getSizes().size()));
         sandwich.setSandwichSize(size);
+        slowPrint(sandwich.toString());
 
+        // bread
         display.displayOptions("Select your bread:", menu.getBreads());
         Bread bread = menu.getBreads().get(display.promptMenuSelection(menu.getBreads().size()));
         sandwich.setBread(bread);
+        slowPrint(sandwich.toString());
 
+        // meat
         display.displayOptions("Select your meat:", menu.getMeats());
         Meat meat = menu.getMeats().get(display.promptMenuSelection(menu.getMeats().size()));
         meat.setWantsExtra(display.askYesNo("Do you want extra " + meat.getName() + "?"));
         sandwich.setMeat(meat);
+        slowPrint(sandwich.toString());
 
-
-        sandwich.setToasted(display.askYesNo("Would you like it toasted?"));
-
+        // cheese
         display.displayOptions("Select your cheese:", menu.getCheeses());
         Cheese cheese = menu.getCheeses().get(display.promptMenuSelection(menu.getCheeses().size()));
         cheese.setWantsExtra(display.askYesNo("Do you want extra " + cheese.getName() + "?"));
         sandwich.setCheese(cheese);
+        slowPrint(sandwich.toString());
 
+        // toppings
         sandwich.initializeToppings(menu.getToppings());
         toppingScreen.runRemoveToppingScreen(sandwich);
+        slowPrint(sandwich.toString());
 
+        // sauces
         sandwich.initializeSauces(menu.getSauces());
         toppingScreen.runRemoveSauceScreen(sandwich);
+        slowPrint(sandwich.toString());
 
+        // sides
+        toppingScreen.runRemoveSideScreen(sandwich);
+        slowPrint(sandwich.toString());
+
+        // toasted
         sandwich.setToasted(display.askYesNo("Would you like it toasted?"));
-        sandwich.setToasted(scanner.nextLine().trim().equalsIgnoreCase("y"));
+        slowPrint(sandwich.toString());
 
         return sandwich;
     }

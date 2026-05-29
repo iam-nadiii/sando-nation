@@ -1,0 +1,33 @@
+
+=============================
+  Order #5063
+=============================
+
+  --- Sandwich ---
+  Size   : 12 inch
+  Bread  : Rye
+  Meat   : Salami (extra)
+  Cheese : Swiss
+  Toppings:
+    + Lettuce
+    + Peppers
+    + Onions
+    + Tomatoes
+    + Jalapenos
+    + Cucumbers
+    + Pickles
+    + Guacamole
+    + Mushrooms
+  Sauces:
+    + mayo
+    + mustard
+    + ketchup
+    + ranch
+    + thousand islands
+    + vinaigrette
+  Toasted: Yes
+  Subtotal: $15.25
+
+─────────────────────────────
+  Order Total: $15.25
+=============================

@@ -1,0 +1,36 @@
+
+=============================
+  Order #2312
+=============================
+
+  --- Sandwich ---
+  Size   : 8 inch
+  Bread  : Wheat
+  Meat   : Chicken (extra)
+  Cheese : American (extra)
+  Toppings:
+    + Lettuce
+    + Onions
+    + Tomatoes
+    + Jalapenos
+    + Cucumbers
+    + Pickles
+    + Guacamole
+    + Mushrooms
+  Sauces:
+    + Mayo
+    + Mustard
+    + Ketchup
+    + Ranch
+    + Vinaigrette
+  Toasted: Yes
+  Sides:
+    + Au Jus (included)
+    + Sauce (included)
+  Subtotal: $12.10
+
+─────────────────────────────
+  Order Total: $12.10
+=============================
+2026-05-28
+14:06:11

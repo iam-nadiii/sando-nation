@@ -17,14 +17,6 @@ public class ReceiptFileHandler {
 
         String fileName  = receipt.getTime().format(formatter) + ".txt";
         String timeStamp = receipt.getTime().format(timeStampFormatter);
-        String dateStamp = receipt.getTime().format(dateStampFormatter);
-        String folderPath = "./" + dateStamp;
-
-        // create folder if it doesn't exist
-        File folder = new File(folderPath);
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
 
         try {
             FileWriter     fileWriter     = new FileWriter(folderPath + "/" + fileName);

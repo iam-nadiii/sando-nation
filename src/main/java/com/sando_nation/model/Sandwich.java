@@ -13,10 +13,13 @@ public class Sandwich implements PricedItem {
     private List<Sauce> sauces;
     private List<Side> sides;
 
+
+
     public Sandwich() {
         this.regularToppings = new ArrayList<>();
-        this.sauces = new ArrayList<>();
-        this.sides = new ArrayList<>();
+        this.sauces          = new ArrayList<>();
+        this.sides           = new ArrayList<>();
+        // all sandwiches come with au jus and sauce
         this.sides.add(new Side("Au Jus"));
         this.sides.add(new Side("Sauce"));
     }
@@ -28,7 +31,9 @@ public class Sandwich implements PricedItem {
     public List<RegularTopping> getRegularToppings()    { return regularToppings; }
     public boolean      isToasted()                     { return isToasted; }
     public void         setToasted(boolean toasted)     { this.isToasted = toasted; }
-    public List<Sauce> getSauces() { return sauces; }
+    public List<Sauce> getSauces() {
+        return sauces;
+    }
     public List<Side> getSides() { return sides; }
 
     public void setSandwichSize(SandwichSize size) {
@@ -127,15 +132,11 @@ public class Sandwich implements PricedItem {
             sb.append("  Sauces:\n");
             sauces.forEach(s -> sb.append("    + ").append(s.getName()).append("\n"));
         }
-
+        sb.append("  Toasted: ").append(isToasted ? "Yes" : "No").append("\n");
         if (!sides.isEmpty()) {
             sb.append("  Sides:\n");
             sides.forEach(s -> sb.append("    + ").append(s.getName()).append(" (included)\n"));
         }
-
-        if (isToasted)
-            sb.append("  Toasted: Yes\n");
-
         sb.append(String.format("  Subtotal: $%.2f", getPrice())).append("\n");
         return sb.toString();
     }

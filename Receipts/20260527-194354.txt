@@ -1,0 +1,29 @@
+
+=============================
+  Order #3814
+=============================
+
+  --- Philly Cheese Steak ---
+  Size   : 8 inch
+  Bread  : White
+  Meat   : Steak
+  Cheese : American
+  Toppings:
+    + Peppers
+    + Onions
+    + Tomatoes
+    + Jalapenos
+    + Cucumbers
+    + Pickles
+    + Guacamole
+    + Mushrooms
+  Sauces:
+    + ranch
+  Toasted: Yes
+  Subtotal: $10.50
+
+─────────────────────────────
+  Order Total: $10.50
+=============================
+2026-05-27
+19:43:54

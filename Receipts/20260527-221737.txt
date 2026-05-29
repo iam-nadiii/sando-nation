@@ -1,0 +1,46 @@
+
+=============================
+  Order #5741
+=============================
+
+  --- Chips ---
+  Brand  : Fritos
+  Subtotal: $1.50
+
+
+  --- Drink ---
+  Flavor : Ginger Ale
+  Size   : medium
+  Subtotal: $2.50
+
+
+  --- Sandwich ---
+  Size   : 12 inch
+  Bread  : Rye
+  Meat   : Salami (extra)
+  Cheese : Cheddar (extra)
+  Toppings:
+    + Lettuce
+    + Peppers
+    + Onions
+    + Tomatoes
+    + Jalapenos
+    + Cucumbers
+    + Pickles
+    + Guacamole
+    + Mushrooms
+  Sauces:
+    + Mayo
+    + Mustard
+    + Ketchup
+    + Ranch
+    + Thousand islands
+    + Vinaigrette
+  Toasted: Yes
+  Subtotal: $16.15
+
+─────────────────────────────
+  Order Total: $20.15
+=============================
+2026-05-27
+22:17:37

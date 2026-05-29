@@ -13,6 +13,7 @@ public class OrderTotalTest {
         order = new Order(1000);
     }
 
+
     @Test
     public void newOrder_isEmpty() {
         assertTrue(order.getItems().isEmpty());

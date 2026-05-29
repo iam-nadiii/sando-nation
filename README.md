@@ -62,9 +62,9 @@ Regular toppings, sauces, and sides are included at no extra charge.
 
 **Home Screen — Menu**
 
-![Menu Top](images/Menu Top.png)
+![Menu Top](images/menutop.png)
 
-![Menu Bottom](images/Menu bottom.png)
+![Menu Bottom](images/menubottom.png)
 
 **Checkout**
 

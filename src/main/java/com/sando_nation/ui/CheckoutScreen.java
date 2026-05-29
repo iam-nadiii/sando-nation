@@ -21,6 +21,11 @@ public class CheckoutScreen {
     }
 
     public void run(Order order) {
+        if (order.getItems().isEmpty()) {
+            DisplayHelper.slowPrint("  Your order is empty. Please add items before checking out.");
+            return;
+        }
+
         boolean checkingOut = true;
         while (checkingOut) {
             System.out.println(order);

@@ -46,4 +46,8 @@ public class Order {
         sb.append("=============================\n");
         return sb.toString();
     }
+
+    public int getOrderNumber() {
+        return orderNumber;
+    }
 }

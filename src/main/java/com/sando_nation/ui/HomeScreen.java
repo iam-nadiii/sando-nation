@@ -110,38 +110,50 @@ public class HomeScreen {
                 "MEATS", "4 inch", "8 inch", "12 inch");
         System.out.println(divider());
 
-        menu.getMeats().forEach(m -> {
-            System.out.printf("  %-40s $%-13.2f $%-13.2f $%.2f%n",
-                    m.getName(),
-                    m.calculatePrice("4 inch",  false),
-                    m.calculatePrice("8 inch",  false),
-                    m.calculatePrice("12 inch", false));
-            System.out.printf("    %-38s +$%-12.2f +$%-12.2f +$%.2f%n",
-                    "Extra " + m.getName(),
-                    m.calculatePrice("4 inch",  true) - m.calculatePrice("4 inch",  false),
-                    m.calculatePrice("8 inch",  true) - m.calculatePrice("8 inch",  false),
-                    m.calculatePrice("12 inch", true) - m.calculatePrice("12 inch", false));
-        });
+        // get first meat for pricing — all meats share same price
+        Meat m = menu.getMeats().get(0);
+        System.out.printf("  %-40s $%-13.2f $%-13.2f $%.2f%n",
+                "",
+                m.calculatePrice("4 inch",  false),
+                m.calculatePrice("8 inch",  false),
+                m.calculatePrice("12 inch", false));
+        System.out.printf("  %-40s +$%-12.2f +$%-12.2f +$%.2f%n",
+                "Extra",
+                m.calculatePrice("4 inch",  true) - m.calculatePrice("4 inch",  false),
+                m.calculatePrice("8 inch",  true) - m.calculatePrice("8 inch",  false),
+                m.calculatePrice("12 inch", true) - m.calculatePrice("12 inch", false));
+        System.out.println(divider());
+
+        // print meat names in a row
+        StringBuilder sb = new StringBuilder("  ");
+        menu.getMeats().forEach(meat -> sb.append(String.format("%-15s", meat.getName())));
+        System.out.println(sb);
     }
 
     private void printCheeses() {
-        System.out.println(divider());
+        System.out.println();
         System.out.printf("  %-40s %-14s %-14s %s%n",
                 "CHEESES", "4 inch", "8 inch", "12 inch");
         System.out.println(divider());
 
-        menu.getCheeses().forEach(c -> {
-            System.out.printf("  %-40s $%-13.2f $%-13.2f $%.2f%n",
-                    c.getName(),
-                    c.calculatePrice("4 inch",  false),
-                    c.calculatePrice("8 inch",  false),
-                    c.calculatePrice("12 inch", false));
-            System.out.printf("    %-38s +$%-12.2f +$%-12.2f +$%.2f%n",
-                    "Extra " + c.getName(),
-                    c.calculatePrice("4 inch",  true) - c.calculatePrice("4 inch",  false),
-                    c.calculatePrice("8 inch",  true) - c.calculatePrice("8 inch",  false),
-                    c.calculatePrice("12 inch", true) - c.calculatePrice("12 inch", false));
-        });
+        // get first cheese for pricing — all cheeses share same price
+        Cheese c = menu.getCheeses().get(0);
+        System.out.printf("  %-40s $%-13.2f $%-13.2f $%.2f%n",
+                "",
+                c.calculatePrice("4 inch",  false),
+                c.calculatePrice("8 inch",  false),
+                c.calculatePrice("12 inch", false));
+        System.out.printf("  %-40s +$%-12.2f +$%-12.2f +$%.2f%n",
+                "Extra",
+                c.calculatePrice("4 inch",  true) - c.calculatePrice("4 inch",  false),
+                c.calculatePrice("8 inch",  true) - c.calculatePrice("8 inch",  false),
+                c.calculatePrice("12 inch", true) - c.calculatePrice("12 inch", false));
+        System.out.println(divider());
+
+        // print cheese names in a row
+        StringBuilder sb = new StringBuilder("  ");
+        menu.getCheeses().forEach(cheese -> sb.append(String.format("%-15s", cheese.getName())));
+        System.out.println(sb);
     }
 
     private void printRegularToppings() {
@@ -186,12 +198,19 @@ public class HomeScreen {
                 "DRINKS", "Small", "Medium", "Large");
         System.out.println(divider());
 
-        menu.getDrinks().forEach(d -> System.out.printf(
-                "  %-35s $%-14.2f $%-14.2f $%.2f%n",
-                d.getName(),
+        // get first drink for pricing — all drinks share same price
+        Drink d = menu.getDrinks().get(0);
+        System.out.printf("  %-35s $%-14.2f $%-14.2f $%.2f%n",
+                "",
                 d.getPriceSmall(),
                 d.getPriceMedium(),
-                d.getPriceLarge()));
+                d.getPriceLarge());
+        System.out.println(divider());
+
+        // print drink names in a row
+        StringBuilder sb = new StringBuilder("  ");
+        menu.getDrinks().forEach(drink -> sb.append(String.format("%-15s", drink.getName())));
+        System.out.println(sb);
     }
 
     private void printChips() {

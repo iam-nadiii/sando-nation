@@ -11,6 +11,7 @@ public class Menu {
     private List<Cheese> cheeses;
     private List<Drink> drinks;
     private List<Chips> chips;
+    private List<Side> sides;
     private List<SignatureSandwich> signatureSandwiches;
 
     public Menu() {
@@ -69,6 +70,10 @@ public class Menu {
         chips.add(new Chips("Cheetos", 1.50));
         chips.add(new Chips("Fritos", 1.50));
 
+        sides = new ArrayList<>();
+        sides.add(new Side("Au Jus"));
+        sides.add(new Side("Sauce"));
+
 
 
         signatureSandwiches = new ArrayList<>();
@@ -112,6 +117,7 @@ public class Menu {
     public List<Sauce> getSauces() { return sauces; }
     public List<Drink> getDrinks() { return drinks; }
     public List<Chips> getChips() { return chips;}
+    public List<Side> getSides() { return sides; }
     public List<SignatureSandwich> getSignatureSandwiches(){return signatureSandwiches;}
 
 }

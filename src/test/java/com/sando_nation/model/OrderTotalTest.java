@@ -49,6 +49,7 @@ public class OrderTotalTest {
         assertTrue(order.getItems().isEmpty());
     }
 
+
     @Test
     public void removeItem_invalidIndex_doesNothing() {
         order.addItem(new Chips("Lays", 1.50));

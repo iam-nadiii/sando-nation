@@ -49,7 +49,5 @@ public class Order {
         return sb.toString();
     }
 
-    public int getOrderNumber() {
-        return orderNumber;
-    }
+
 }

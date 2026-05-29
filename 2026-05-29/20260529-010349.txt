@@ -1,0 +1,25 @@
+
+=============================
+  Order #4888
+=============================
+
+  --- Philly Cheese Steak ---
+  Size   : 12 inch
+  Bread  : White
+  Meat   : Steak
+  Cheese : American
+  Toppings:
+    + Peppers
+  Sauces:
+    + mayo
+  Sides:
+    + Au Jus (included)
+    + Sauce (included)
+  Toasted: Yes
+  Subtotal: $13.75
+
+─────────────────────────────
+  Order Total: $13.75
+=============================
+2026-05-29
+01:03:49

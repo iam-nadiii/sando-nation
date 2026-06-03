@@ -2,37 +2,41 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" spacing="20"
+<VBox alignment="CENTER" spacing="15"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.sando_nation.screen.OrderController">
 
-    <Label text="Order Screen"
+    <Label fx:id="orderLabel"
+           text="Order Screen"
            style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <Label fx:id="orderSummary"
+           text=""
+           style="-fx-font-size: 12px;"/>
 
     <Button text="Add Sandwich"
             onAction="#handleAddSandwich"
-            prefWidth="200"/>
+            prefWidth="200" prefHeight="40"/>
 
     <Button text="Add Drink"
             onAction="#handleAddDrink"
-            prefWidth="200"/>
+            prefWidth="200" prefHeight="40"/>
 
     <Button text="Add Chips"
             onAction="#handleAddChips"
-            prefWidth="200"/>
+            prefWidth="200" prefHeight="40"/>
 
     <Button text="Add Signature Sandwich"
             onAction="#handleAddSignatureSandwich"
-            prefWidth="200"/>
+            prefWidth="200" prefHeight="40"/>
 
     <Button text="Checkout"
             onAction="#handleCheckout"
-            prefWidth="200"/>
+            prefWidth="200" prefHeight="40"/>
 
     <Button fx:id="cancelButton"
             text="Cancel Order"
             onAction="#handleCancelOrder"
-            prefWidth="200"/>
-
+            prefWidth="200" prefHeight="40"/>
 
 </VBox>

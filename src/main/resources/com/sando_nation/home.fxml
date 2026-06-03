@@ -7,15 +7,21 @@
       fx:controller="com.sando_nation.screen.HomeController">
 
     <Label text="Welcome to Sando-Nation!!"
-           style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+           style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
+
+    <Label text="Your Custom Sandwich Experience"
+           style="-fx-font-size: 14px;"/>
 
     <Button fx:id="newOrderButton"
             text="New Order"
             onAction="#handleNewOrder"
-            prefWidth="200"/>
+            prefWidth="200"
+            prefHeight="40"/>
 
     <Button fx:id="exitButton"
             text="Exit"
             onAction="#handleExit"
-            prefWidth="200"/>
+            prefWidth="200"
+            prefHeight="40"/>
+
 </VBox>

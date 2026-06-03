@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" style="-fx-padding: 20;"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.sando_nation.screen.SignatureController">
+
+    <Label text="Select a Signature Sandwich"
+           style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <ListView fx:id="signatureList" prefHeight="150" prefWidth="400"/>
+
+    <Label text="Select a size:"/>
+    <ListView fx:id="sizeList" prefHeight="100" prefWidth="400"/>
+
+    <Label fx:id="summaryLabel"
+           text=""
+           style="-fx-font-size: 12px; -fx-text-fill: gray;"
+           wrapText="true"/>
+
+    <HBox spacing="15">
+        <Button text="Add to Order"
+                onAction="#handleAddSignature"
+                prefWidth="150" prefHeight="35"/>
+        <Button fx:id="cancelButton"
+                text="Cancel"
+                onAction="#handleCancel"
+                prefWidth="150" prefHeight="35"/>
+    </HBox>
+
+</VBox>

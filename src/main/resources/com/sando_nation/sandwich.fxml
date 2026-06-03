@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" style="-fx-padding: 20;"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.sando_nation.screen.SandwichController">
+
+    <Label fx:id="stepLabel"
+           style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <Label fx:id="sandwichSummary"
+           style="-fx-font-size: 12px; -fx-text-fill: gray;"/>
+
+    <ListView fx:id="optionsList"
+              prefHeight="200"
+              prefWidth="400"/>
+
+    <CheckBox fx:id="extraCheckBox"
+              text="Add extra?"
+              visible="false"/>
+
+    <HBox spacing="15" alignment="CENTER_LEFT">
+        <Button fx:id="nextButton"
+                text="Next"
+                onAction="#handleNext"
+                prefWidth="120" prefHeight="35"/>
+        <Button fx:id="doneButton"
+                text="Done"
+                onAction="#handleDone"
+                prefWidth="120" prefHeight="35"
+                visible="false"/>
+        <Button fx:id="cancelButton"
+                text="Cancel"
+                onAction="#handleCancel"
+                prefWidth="120" prefHeight="35"/>
+    </HBox>
+
+
+</VBox>
